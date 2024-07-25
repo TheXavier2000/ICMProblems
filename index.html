@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Informes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="logoACC.png" alt="Logo Empresarial">
+        </div>
+        <div class="title">
+            <h1>Generador de Informes</h1>
+        </div>
+        <div class="description">
+            <h3>A continuación, seleccione una fecha de inicio y final para generar un informe con los equipos que han tenido el problema "Unavailable by ICMP ping" en el rango de tiempo seleccionado</h3>
+        </div>
+        <div class="form-container">
+            <form>
+                <label for="start-date">Fecha de inicio:</label>
+                <input type="text" id="start-date" name="start-date" readonly>
+                
+                <label for="end-date">Fecha final:</label>
+                <input type="text" id="end-date" name="end-date" readonly>  
+            </form>
+            <button type="button" id="generate-report">Generar Informe</button>
+            <a id="download-report" href="#" style="display: none;" download="Informe_Equipos.csv">Descargar Informe</a>
+
+        </div>
+        <div id="status-message"></div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+</body>
+</html>

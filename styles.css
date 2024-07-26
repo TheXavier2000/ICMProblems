@@ -217,24 +217,30 @@ button {
     border-radius: 25px; /* Opcional: bordes redondeados */
     background-color: hsl(210, 87%, 47%); /* Fondo azul oscuro */
     margin-top: 20px; /* Ajusta el valor según sea necesario */
+    color: #FFFFFF; /* Color del texto */
+    text-shadow: 
+        1px 1px 0 #000000,  
+        -1px -1px 0 #000000,
+        1px -1px 0 #000000,
+        -1px 1px 0 #000000; /* Ajusta el color y tamaño del contorno */
 }
 
 .status-message_OK {
     color: #20FA04; /* Color verde claro para éxito */
-    background-color: #e1e6eb54; /* Fondo azul oscuro */
+    background-color: #e1e6eb54; /* Fondo blanco transparente */
 }
 
 .status-message_ERROR {
     color: #D7EE05; /* Color amarillo para error */
-    background-color: #003366; /* Fondo azul oscuro */
+    background-color: #e1e6eb54; /* Fondo blanco transparente */
 }
 
 .status-message_INCOMPLETE {
-    color: #FF4800; /* Color naranja para incompleto */
-    background-color: #003366; /* Fondo azul oscuro */
+    color: #00fff2; /* Color naranja para incompleto */
+    background-color: #e1e6eb54; /* Fondo blanco transparente */
 }
 
 .status-message_GENERATING {
     color: #FFFFFF; /* Color blanco para el mensaje de generación */
-    background-color: #003366; /* Fondo azul oscuro */
+    background-color: #e1e6eb54; /* Fondo blanco transparente */
 }

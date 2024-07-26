@@ -32,15 +32,15 @@ $(document).ready(function() {
     }
 
     $("#start-date").datepicker({
-        dateFormat: "yy-mm-dd", // Formato de fecha adecuado para tu aplicación
+        dateFormat: "yy-mm-dd",
         onSelect: function(selectedDate) {
             $("#end-date").datepicker("option", "minDate", selectedDate);
-            $("#end-date").prop("disabled", false); // Habilitar el campo de fecha final al seleccionar una fecha de inicio
+            $("#end-date").prop("disabled", false);
         },
         beforeShow: function(input, inst) {
             addCustomButtons(input);
         },
-        showButtonPanel: true // Mostrar panel de botones
+        showButtonPanel: true
     });
 
     $("#end-date").prop("disabled", true).datepicker({
@@ -53,21 +53,16 @@ $(document).ready(function() {
                     $("#start-date").datepicker("setDate", selectedDate);
                 }
             }
-        },
-        beforeShow: function(input, inst) {
-            addCustomButtons(input);
-        },
-        showButtonPanel: true // Mostrar panel de botones
+        }
     });
 
-    // Botón para limpiar fechas
     $("#clear-dates").click(function() {
-        $("#start-date").val(""); // Limpiar fecha de inicio
-        $("#end-date").val(""); // Limpiar fecha final
-        $("#end-date").prop("disabled", true); // Deshabilitar campo de fecha final
+        $("#start-date").val("");
+        $("#end-date").val("");
+        $("#end-date").prop("disabled", true);
     });
 
-    // Lógica para cargar y seleccionar grupos
+    // Cargar y seleccionar grupos
     fetch('http://10.144.2.194/zabbix/api_jsonrpc.php', {
         method: 'POST',
         headers: {
@@ -90,11 +85,10 @@ $(document).ready(function() {
         }
         let groups = data.result;
 
-        // Configurar el autocompletado
         $("#group-search").autocomplete({
             source: groups.map(group => ({
-                label: group.name,  // Texto a mostrar en la lista de sugerencias
-                value: group.groupid // Valor que se seleccionará
+                label: group.name,
+                value: group.groupid
             })),
             select: function(event, ui) {
                 let selectedGroupId = ui.item.value;
@@ -106,18 +100,17 @@ $(document).ready(function() {
                             ${selectedGroupName} <span class="remove-group" onclick="removeGroup('${selectedGroupId}')">X</span>
                         </div>`
                     );
-                    $("#group-search").val(""); // Limpiar el campo de búsqueda
+                    $("#group-search").val("");
                 }
 
                 $("#selected-group-message").text("Grupos seleccionados: " + $("#selected-groups .group").map(function() { return $(this).text().trim(); }).get().join(", "));
-                $("#group-search").autocomplete("close"); // Cerrar la lista de autocompletado
-                return false; // Prevenir el autocompletado de llenar el campo
+                $("#group-search").autocomplete("close");
+                return false;
             }
         });
     })
     .catch(error => console.error('Error al cargar grupos:', error));
 
-    // Función para eliminar un grupo
     window.removeGroup = function(groupId) {
         $(`#selected-groups .group[data-id='${groupId}']`).remove();
         $("#selected-group-message").text("Grupos seleccionados: " + $("#selected-groups .group").map(function() { return $(this).text().trim(); }).get().join(", "));
@@ -126,11 +119,11 @@ $(document).ready(function() {
     $("#generate-report").click(function() {
         let startDate = $("#start-date").val();
         let endDate = $("#end-date").val();
-        let selectedGroupIds = $("#selected-groups .group").map(function() { return $(this).data("id"); }).get(); // Obtiene los IDs de los grupos seleccionados
-        let selectedGroupNames = $("#selected-groups .group").map(function() { return $(this).text().trim().replace(' X', ''); }).get(); // Obtiene los nombres de los grupos seleccionados
+        let selectedGroupIds = $("#selected-groups .group").map(function() { return $(this).data("id"); }).get();
+        let selectedGroupNames = $("#selected-groups .group").map(function() { return $(this).text().trim().replace(' X', ''); }).get();
     
         if (startDate && endDate && selectedGroupIds.length) {
-            $("#status-message").text("Se está generando su informe...");
+            $("#status-message").removeClass().addClass("status-message status-message_GENERATING").text("Se está generando su informe...");
             $("#download-report").hide(); // Oculta el botón de descarga mientras se genera el informe
     
             // Función para convertir fechas a timestamps UNIX
@@ -142,40 +135,37 @@ $(document).ready(function() {
             let startTimestamp = convertToUnixTimestamp(startDate);
             let endTimestamp = convertToUnixTimestamp(endDate);
     
-            // Consultar eventos
-            fetch('http://10.144.2.194/zabbix/api_jsonrpc.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    jsonrpc: "2.0",
-                    method: "event.get",
-                    params: {
-                        output: ["name", "clock", "severity", "hosts"],
-                        groupids: selectedGroupIds, // Usar los grupos seleccionados
-                        time_from: startTimestamp,
-                        time_till: endTimestamp,
-                        search: {
-                            name: "Unavailable by ICMP ping"
-                        },
-                        severities: [4],
-                        selectHosts: ["name"],
-                        sortfield: "clock",
-                        sortorder: "DESC"
+            // Función para consultar eventos por grupo
+            function fetchEventsForGroup(groupId) {
+                return fetch('http://10.144.2.194/zabbix/api_jsonrpc.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
-                    auth: "68f08dd04965819aebf23bc2659a239f",
-                    id: 2
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.result) {
-                    throw new Error("No se encontraron eventos o error en la consulta.");
-                }
-                let events = data.result;
+                    body: JSON.stringify({
+                        jsonrpc: "2.0",
+                        method: "event.get",
+                        params: {
+                            output: ["name", "clock", "severity", "hosts"],
+                            groupids: [groupId],
+                            time_from: startTimestamp,
+                            time_till: endTimestamp,
+                            search: {
+                                name: "Unavailable by ICMP ping"
+                            },
+                            severities: [4],
+                            selectHosts: ["name"],
+                            sortfield: "clock",
+                            sortorder: "DESC"
+                        },
+                        auth: "68f08dd04965819aebf23bc2659a239f",
+                        id: 2
+                    })
+                }).then(response => response.json());
+            }
     
-                // Consultar detalles de los hosts
+            // Función para consultar detalles de los hosts por grupo
+            function fetchHostsForGroup(groupId) {
                 return fetch('http://10.144.2.194/zabbix/api_jsonrpc.php', {
                     method: 'POST',
                     headers: {
@@ -186,87 +176,108 @@ $(document).ready(function() {
                         method: "host.get",
                         params: {
                             output: ["hostid", "name"],
-                            groupids: selectedGroupIds, // Usar los grupos seleccionados
+                            groupids: [groupId],
                             selectInterfaces: ["ip"],
                             selectInventory: ["site_state", "site_city"]
                         },
                         auth: "68f08dd04965819aebf23bc2659a239f",
                         id: 2
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.result) {
-                        throw new Error("No se encontraron hosts o error en la consulta.");
-                    }
-                    let hosts = data.result;
+                }).then(response => response.json());
+            }
     
-                    // Cruce de datos y generación del informe
-                    let reportData = events.map(event => {
-                        let host = hosts.find(h => h.hostid === event.hosts[0].hostid);
+            // Crear un array de promesas para cada grupo
+            let promises = selectedGroupIds.map((groupId, index) => {
+                return fetchEventsForGroup(groupId).then(eventData => {
+                    return fetchHostsForGroup(groupId).then(hostData => {
+                        let events = eventData.result;
+                        let hosts = hostData.result;
+    
+                        // Procesar eventos y hosts
+                        let reportData = events.map(event => {
+                            let host = hosts.find(h => h.hostid === event.hosts[0].hostid);
+                            return {
+                                "Hora Inicio": new Date(event.clock * 1000).toLocaleString("es-CO", { timeZone: "America/Bogota" }),
+                                "Estado": event.severity,
+                                "Host": host ? host.name : "Desconocido",
+                                "IP": host && host.interfaces.length > 0 ? host.interfaces[0].ip : "Desconocida",
+                                "Departamento": host && host.inventory ? host.inventory.site_state : "Desconocido",
+                                "Municipio": host && host.inventory ? host.inventory.site_city : "Desconocido",
+                                "Problema": "Unavailable by ICMP ping" // Agregar el nombre del problema
+                            };
+                        });
+    
                         return {
-                            "Hora Inicio": new Date(event.clock * 1000).toLocaleString("es-CO", { timeZone: "America/Bogota" }),
-                            "Estado": event.severity,
-                            "Host": host ? host.name : "Desconocido",
-                            "IP": host && host.interfaces.length > 0 ? host.interfaces[0].ip : "Desconocida",
-                            "Departamento": host && host.inventory ? host.inventory.site_state : "Desconocido",
-                            "Municipio": host && host.inventory ? host.inventory.site_city : "Desconocido",
-                            "Problema": "Unavailable by ICMP ping" // Agregar el nombre del problema
+                            groupName: selectedGroupNames[index],
+                            data: reportData
                         };
                     });
-    
-                    // Convertir datos a Excel usando SheetJS
-                    let wb = XLSX.utils.book_new();
-                    let ws = XLSX.utils.json_to_sheet(reportData);
-    
-                    // Aplicar negrilla a los encabezados
-                    ws["!cols"] = [
-                        { wpx: 200 }, { wpx: 100 }, { wpx: 150 }, { wpx: 100 }, { wpx: 150 }, { wpx: 150 }, { wpx: 200 }
-                    ]; // Ajustar el ancho de las columnas si es necesario
-                    ws["!rows"] = [];
-                    ws["A1"].s = { font: { bold: true } };
-                    ws["B1"].s = { font: { bold: true } };
-                    ws["C1"].s = { font: { bold: true } };
-                    ws["D1"].s = { font: { bold: true } };
-                    ws["E1"].s = { font: { bold: true } };
-                    ws["F1"].s = { font: { bold: true } };
-                    ws["G1"].s = { font: { bold: true } };
-    
-                    XLSX.utils.book_append_sheet(wb, ws, "Informe");
-    
-                    // Crear un archivo descargable
-                    let wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-                    let blob = new Blob([wbout], { type: "application/octet-stream" });
-                    let fileName = `informe_${startDate}_${endDate}_${selectedGroupNames.join("_")}.xlsx`;
-                    let link = document.createElement("a");
-                    if (link.download !== undefined) {
-                        let url = URL.createObjectURL(blob);
-                        link.setAttribute("href", url);
-                        link.setAttribute("download", fileName);
-                        link.style.visibility = "hidden";
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }
-    
-                    $("#status-message").addClass("status-message_OK").text("Informe generado exitosamente.");
-                    $("#download-report").show();
-    
-                    // Limpiar los campos después de generar el informe
-                    $("#start-date").val(""); // Limpiar fecha de inicio
-                    $("#end-date").val(""); // Limpiar fecha final
-                    $("#end-date").prop("disabled", true); // Deshabilitar campo de fecha final
-                    $("#selected-groups").empty(); // Limpiar grupos seleccionados
-                    $("#selected-group-message").text(""); // Limpiar mensaje de grupos seleccionados
                 });
-            })
-            .catch(error => {
+            });
+    
+            // Ejecutar todas las promesas
+            Promise.all(promises).then(results => {
+                // Crear el archivo Excel con todas las hojas
+                let wb = XLSX.utils.book_new();
+    
+                results.forEach(result => {
+                    let sheetName = result.groupName;
+    
+                    // Reemplazar caracteres no permitidos con "|"
+                    sheetName = sheetName.replace(/[:\/\\?\*\[\]]/g, '|');
+                
+                    // Truncar nombre y añadir "..." si es necesario
+                    let truncatedName = sheetName.length > 25 ? sheetName.substring(0, 25) + "..." : sheetName;
+                
+                    let ws = XLSX.utils.json_to_sheet(result.data);
+                    XLSX.utils.book_append_sheet(wb, ws, truncatedName);
+                });
+    
+                // Convertir el libro a un archivo descargable
+                let wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
+    
+                function s2ab(s) {
+                    let buf = new ArrayBuffer(s.length);
+                    let view = new Uint8Array(buf);
+                    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+                }
+    
+                let blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
+                let formattedStartDate = startDate.replace(/-/g, "/");
+                let formattedEndDate = endDate.replace(/-/g, "/");
+                let fileName = `informe_${formattedStartDate}_${formattedEndDate}_${selectedGroupNames.join("_")}.xlsx`;
+                let link = document.createElement("a");
+                if (link.download !== undefined) {
+                    let url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", fileName);
+                    link.style.visibility = "hidden";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+    
+                $("#status-message").removeClass().addClass("status-message status-message_OK").text("Informe generado exitosamente.");
+                $("#download-report").show();
+    
+                // Limpiar los campos después de generar el informe
+                $("#start-date").val(""); // Limpiar fecha de inicio
+                $("#end-date").val(""); // Limpiar fecha final
+                $("#end-date").prop("disabled", true); // Deshabilitar campo de fecha final
+                $("#selected-groups").empty(); // Limpiar grupos seleccionados
+                $("#selected-group-message").text(""); // Limpiar mensaje de grupos seleccionados
+            }).catch(error => {
                 console.error('Error al generar el informe:', error);
-                $("#status-message").addClass("status-message_ERROR").text("Error al generar el informe.");
+                $("#status-message").removeClass().addClass("status-message status-message_ERROR").text("Error al generar el informe.");
             });
         } else {
-            $("#status-message").addClass("status-message_INCOMPLETE").text("Por favor, seleccione las fechas y grupos requeridos.");
+            $("#status-message").removeClass().addClass("status-message status-message_INCOMPLETE").text("Por favor, seleccione las fechas y grupos requeridos.");
         }
     });
+    
+    
+    
+    
     
 });

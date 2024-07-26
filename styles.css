@@ -209,20 +209,32 @@ button {
     background-color: #357abd; /* Color de fondo al pasar el ratón */
 }
 
-.status-message_OK {
-    color: rgba(32, 250, 4, 0.89);
+
+.status-message {
     font-weight: bold;
     font-size: 1.5em; /* Ajusta el tamaño según sea necesario */
+    padding: 5px; /* Añade algo de espacio alrededor del texto */
+    border-radius: 25px; /* Opcional: bordes redondeados */
+    background-color: hsl(210, 87%, 47%); /* Fondo azul oscuro */
+    margin-top: 20px; /* Ajusta el valor según sea necesario */
+}
+
+.status-message_OK {
+    color: #20FA04; /* Color verde claro para éxito */
+    background-color: #e1e6eb54; /* Fondo azul oscuro */
 }
 
 .status-message_ERROR {
-    color: rgb(224, 5, 5);
-    font-weight: bold;
-    font-size: 1.5em; /* Ajusta el tamaño según sea necesario */
+    color: #D7EE05; /* Color amarillo para error */
+    background-color: #003366; /* Fondo azul oscuro */
 }
 
 .status-message_INCOMPLETE {
-    color: rgb(230, 255, 6);
-    font-weight: bold;
-    font-size: 1.5em; /* Ajusta el tamaño según sea necesario */
+    color: #FF4800; /* Color naranja para incompleto */
+    background-color: #003366; /* Fondo azul oscuro */
+}
+
+.status-message_GENERATING {
+    color: #FFFFFF; /* Color blanco para el mensaje de generación */
+    background-color: #003366; /* Fondo azul oscuro */
 }

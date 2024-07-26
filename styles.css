@@ -1,13 +1,12 @@
-/*
-Estilos para los elementos body y html
-*/
+/* Estilos para los elementos body y html */
 body, html {
     height: 100%; /* Establece la altura del cuerpo y del documento HTML al 100% de la altura de la ventana del navegador. */
     margin: 0; /* Elimina los márgenes predeterminados del cuerpo y del documento HTML. */
     font-family: Arial, sans-serif; /* Establece la fuente predeterminada para el cuerpo y el documento HTML a Arial, y usa cualquier fuente sans-serif si Arial no está disponible. */
+    
 }
 
-/*Estilos para la clase container*/
+/* Estilos para la clase container */
 .container {
     background-image: url('fondo.png'); /* Establece una imagen de fondo para el contenedor. */
     background-size: cover; /* Hace que la imagen de fondo cubra todo el contenedor, incluso si esto significa que la imagen tiene que ser recortada. */
@@ -40,8 +39,7 @@ body, html {
 
 .description h3 {
     color: white;
-    font-size: 1.5em;
-    font-size: small;
+    font-size: 1em;
     font-family: 'Arial', sans-serif;
 }
 
@@ -50,39 +48,181 @@ body, html {
     padding: 20px;
     border-radius: 10px;
     font-family: 'Arial', sans-serif;
+    max-width: 600px; /* Limita el ancho máximo del contenedor del formulario */
+    width: 100%; /* Ocupa el 100% del ancho disponible */
+    box-sizing: border-box; /* Incluye el padding y el border en el ancho total */
 }
 
+/* Estilo para el formulario */
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-label {
+
+
+
+
+/* Estilo para el campo de búsqueda */
+#group-search {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 300px; /* Limita el ancho máximo */
+    padding: 10px; /* Espaciado interno */
+    margin: 0 auto; /* Centra el campo horizontalmente */
+    margin-left: 130px; /* Ajusta este valor para mover el campo a la derecha */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: all 0.5s ease; /* Transición suave para el enfoque */
+}
+
+
+/* Cambiar el borde del campo de búsqueda al enfocar */
+#group-search:focus {
+    border-color: #4a90e2; /* Color de borde al enfocar */
+    outline: none; /* Eliminar el contorno por defecto */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave para el enfoque */
+}
+
+/* Estilo para el contenedor de los campos de fecha */
+.date-container {
+    display: flex;
+    flex-direction: column; /* Los campos de fecha se apilan verticalmente */
+    align-items: center; /* Centra los elementos hijos horizontalmente */
+    gap: 10px; /* Espacio entre los campos de fecha */
     margin-top: 10px;
-    font-size: 1.2em;
+    width: 100%; /* Ocupa todo el ancho del contenedor */
 }
 
-input {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
+/* Estilo para los campos de fecha */
+.date-field {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    max-width: 300px; /* Limita el ancho máximo */
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1em;
-    color: white;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 5px;
+#start-date, #end-date {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: all 0.3s ease; /* Transición suave para el enfoque */
+}
+
+/* Cambiar el borde del campo de fecha al enfocar */
+#start-date:focus, #end-date:focus {
+    border-color: #4a90e2; /* Color de borde al enfocar */
+    outline: none; /* Eliminar el contorno por defecto */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave para el enfoque */
+}
+
+/* Estilo para el botón de limpiar fechas */
+#clear-dates {
+    background-color: transparent; /* Sin color de fondo */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cursor pointer */
+    font-size: 18px; /* Tamaño del icono */
+    color: #e94e77; /* Color del icono */
+    transition: color 0.3s ease; /* Transición suave para el color */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+/* Cambiar el color del icono al pasar el ratón */
+#clear-dates:hover {
+    color: #d43f77; /* Color del icono al pasar el ratón */
+}
+
+/* Estilo para el contenedor de los grupos seleccionados */
+#selected-groups {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias líneas si es necesario */
+    gap: 5px; /* Espacio entre los elementos */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+/* Estilo para cada grupo seleccionado */
+.group {
+    font-size: 0.9em; /* Tamaño de fuente */
+    padding: 5px 10px; /* Espaciado interno */
+    background-color: #f0f0f0; /* Color de fondo */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    display: flex;
+    align-items: center;
+}
+
+.group span.remove-group {
+    color: red;
+    margin-left: 5px; /* Espaciado entre el nombre del grupo y el ícono de eliminación */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Cambiar el cursor al pasar sobre la X */
+.group span.remove-group:hover {
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
+/* Estilo general para los botones */
+button {
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cursor pointer para el botón */
+    transition: background-color 0.3s ease; /* Transición suave para el fondo */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+/* Estilo para el botón de generar informe */
+#generate-report {
+    background-color: #4a90e2; /* Color de fondo */
+    color: white; /* Color del texto */
+    display: block; /* Ocupa toda la anchura disponible */
+    max-width: 300px; /* Limita el ancho máximo */
+    margin: 10px auto; /* Centra el botón horizontalmente */
+}
+
+/* Cambiar el color del botón al pasar el ratón */
+#generate-report:hover {
+    background-color: #357abd; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilo para el enlace de descarga */
+#download-report {
+    display: inline-block; /* Alineación en línea */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #4a90e2; /* Color de fondo */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+    text-align: center; /* Alineación del texto */
+    margin-top: 10px; /* Espaciado superior */
+    max-width: 300px; /* Limita el ancho máximo */
+    display: block; /* Ocupa toda la anchura disponible */
+    margin: 10px auto; /* Centra el enlace horizontalmente */
+}
+
+/* Cambiar el color del enlace al pasar el ratón */
+#download-report:hover {
+    background-color: #357abd; /* Color de fondo al pasar el ratón */
+}
+
+.status-message_OK {
+    color: rgba(32, 250, 4, 0.89);
+    font-weight: bold;
+    font-size: 1.5em; /* Ajusta el tamaño según sea necesario */
+}
+
+.status-message_ERROR {
+    color: rgb(224, 5, 5);
+    font-weight: bold;
+    font-size: 1.5em; /* Ajusta el tamaño según sea necesario */
+}
+
+.status-message_INCOMPLETE {
+    color: rgb(230, 255, 6);
+    font-weight: bold;
+    font-size: 1.5em; /* Ajusta el tamaño según sea necesario */
 }

@@ -58,7 +58,11 @@ $(document).ready(function() {
                     $("#start-date").datepicker("setDate", selectedDate);
                 }
             }
-        }
+        },
+        beforeShow: function(input, inst) {
+            addCustomButtons(input);
+        },
+        showButtonPanel: true
     });
 
     // Limpiar las fechas seleccionadas

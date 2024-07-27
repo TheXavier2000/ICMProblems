@@ -43,13 +43,13 @@ $(document).ready(function() {
             select: function(event, ui) {
                 let selectedSeverityId = ui.item.value;
                 let selectedSeverityName = ui.item.label;
-
+    
                 // Guardar el ID de severidad seleccionada en el array selectedSeverityIds
                 let selectedSeverityIds = $("#selected-severities").data("selectedSeverityIds") || [];
                 if (!selectedSeverityIds.includes(selectedSeverityId)) {
                     selectedSeverityIds.push(selectedSeverityId);
                     $("#selected-severities").data("selectedSeverityIds", selectedSeverityIds);
-
+    
                     $("#selected-severities").append(
                         `<div class="severity" data-id="${selectedSeverityId}">
                             ${truncateName(selectedSeverityName, 25)} <span class="remove-severity" onclick="removeSeverity('${selectedSeverityId}')">X</span>
@@ -57,13 +57,28 @@ $(document).ready(function() {
                     );
                     $("#severities-search").val("");
                 }
-
+    
                 $("#selected-severity-message").text("Severidades seleccionadas: " + $("#selected-severities .severity").map(function() { return $(this).text().trim(); }).get().join(", "));
                 $("#severities-search").autocomplete("close");
                 return false;
             }
         });
     });
+    
+    function removeSeverity(severityId) {
+        let selectedSeverityIds = $("#selected-severities").data("selectedSeverityIds") || [];
+        selectedSeverityIds = selectedSeverityIds.filter(id => id !== severityId);
+        $("#selected-severities").data("selectedSeverityIds", selectedSeverityIds);
+    
+        $(`#selected-severities .severity[data-id='${severityId}']`).remove();
+    
+        $("#selected-severity-message").text("Severidades seleccionadas: " + $("#selected-severities .severity").map(function() { return $(this).text().trim(); }).get().join(", "));
+    }
+    
+    function truncateName(name, maxLength) {
+        return name.length > maxLength ? name.substring(0, maxLength - 3) + '...' : name;
+    }
+    
 
     // Función para eliminar un grupo seleccionado
     window.removeGroup = function(groupId) {

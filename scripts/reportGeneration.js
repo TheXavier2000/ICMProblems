@@ -37,6 +37,9 @@ $(document).ready(function() {
 
                     // Función para consultar eventos por grupo
                     function fetchEventsForGroup(groupId) {
+                        // Obtener los IDs de severidades seleccionadas
+                        let selectedSeverityIds = $("#selected-severities").data("selectedSeverityIds") || [];
+                    
                         return fetch('http://10.144.2.194/zabbix/api_jsonrpc.php', {
                             method: 'POST',
                             headers: {
@@ -53,6 +56,7 @@ $(document).ready(function() {
                                     search: {
                                         name: "Unavailable by ICMP ping"
                                     },
+                                    severities: selectedSeverityIds, // Usar los IDs de severidades seleccionadas
                                     selectHosts: ["name"],
                                     sortfield: "clock",
                                     sortorder: "DESC"
@@ -62,6 +66,7 @@ $(document).ready(function() {
                             })
                         }).then(response => response.json());
                     }
+                    
 
                     // Función para consultar detalles de los hosts por grupo
                     function fetchHostsForGroup(groupId) {

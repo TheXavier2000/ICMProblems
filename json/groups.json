@@ -1,418 +1,105 @@
-{
-    "jsonrpc": "2.0",
-    "result": [
-        {
-            "groupid": "58",
-            "name": "3 PAR Data"
-        },
-        {
-            "groupid": "22",
-            "name": "Alcatel V2"
-        },
-        {
-            "groupid": "21",
-            "name": "Alcatel V3"
-        },
-        {
-            "groupid": "85",
-            "name": "AppearTv"
-        },
-        {
-            "groupid": "29",
-            "name": "CheckPoint V2"
-        },
-        {
-            "groupid": "30",
-            "name": "Cisco V2"
-        },
-        {
-            "groupid": "51",
-            "name": "Clientes"
-        },
-        {
-            "groupid": "60",
-            "name": "Clientes_Disable"
-        },
-        {
-            "groupid": "124",
-            "name": "Computadores"
-        },
-        {
-            "groupid": "68",
-            "name": "DNS"
-        },
-        {
-            "groupid": "64",
-            "name": "DSI_ONTs"
-        },
-        {
-            "groupid": "5",
-            "name": "Discovered hosts"
-        },
-        {
-            "groupid": "52",
-            "name": "Dispositivos Auxiliares"
-        },
-        {
-            "groupid": "75",
-            "name": "Dispositivos Auxiliares/OTU"
-        },
-        {
-            "groupid": "76",
-            "name": "Dispositivos Auxiliares/Planta"
-        },
-        {
-            "groupid": "57",
-            "name": "Dummy"
-        },
-        {
-            "groupid": "86",
-            "name": "Encoders"
-        },
-        {
-            "groupid": "17",
-            "name": "Ericsson V2"
-        },
-        {
-            "groupid": "63",
-            "name": "Firewall_Corporativo"
-        },
-        {
-            "groupid": "104",
-            "name": "Firewalls"
-        },
-        {
-            "groupid": "87",
-            "name": "Frame Distribuidor"
-        },
-        {
-            "groupid": "27",
-            "name": "GPON"
-        },
-        {
-            "groupid": "88",
-            "name": "Gestore_Encoders"
-        },
-        {
-            "groupid": "59",
-            "name": "H3C"
-        },
-        {
-            "groupid": "23",
-            "name": "Hewlett Packard V2"
-        },
-        {
-            "groupid": "20",
-            "name": "Huawei GPON"
-        },
-        {
-            "groupid": "19",
-            "name": "Huawei V2"
-        },
-        {
-            "groupid": "7",
-            "name": "Hypervisors"
-        },
-        {
-            "groupid": "89",
-            "name": "IRDs"
-        },
-        {
-            "groupid": "35",
-            "name": "Linux servers"
-        },
-        {
-            "groupid": "102",
-            "name": "LoadBalancerF5"
-        },
-        {
-            "groupid": "96",
-            "name": "LoadBalancerF5_TP"
-        },
-        {
-            "groupid": "47",
-            "name": "MSSQL Databases"
-        },
-        {
-            "groupid": "90",
-            "name": "Media Kind Controller"
-        },
-        {
-            "groupid": "39",
-            "name": "Mikrotik V2"
-        },
-        {
-            "groupid": "18",
-            "name": "My Templates"
-        },
-        {
-            "groupid": "46",
-            "name": "MySQL Databases"
-        },
-        {
-            "groupid": "84",
-            "name": "Network_disable"
-        },
-        {
-            "groupid": "50",
-            "name": "Networking"
-        },
-        {
-            "groupid": "109",
-            "name": "Networking/Agregadores/Concentradores/PE"
-        },
-        {
-            "groupid": "66",
-            "name": "Networking/BRAS"
-        },
-        {
-            "groupid": "80",
-            "name": "Networking/CCTV"
-        },
-        {
-            "groupid": "67",
-            "name": "Networking/CP"
-        },
-        {
-            "groupid": "111",
-            "name": "Networking/DNS"
-        },
-        {
-            "groupid": "69",
-            "name": "Networking/DPI"
-        },
-        {
-            "groupid": "72",
-            "name": "Networking/FOADM"
-        },
-        {
-            "groupid": "107",
-            "name": "Networking/GW sensores"
-        },
-        {
-            "groupid": "73",
-            "name": "Networking/IGW"
-        },
-        {
-            "groupid": "74",
-            "name": "Networking/OLT"
-        },
-        {
-            "groupid": "98",
-            "name": "Networking/OLT_TP"
-        },
-        {
-            "groupid": "70",
-            "name": "Networking/Router"
-        },
-        {
-            "groupid": "110",
-            "name": "Networking/RouterRP"
-        },
-        {
-            "groupid": "81",
-            "name": "Networking/RouterReflector"
-        },
-        {
-            "groupid": "94",
-            "name": "Networking/RouterTP"
-        },
-        {
-            "groupid": "77",
-            "name": "Networking/Servidor"
-        },
-        {
-            "groupid": "78",
-            "name": "Networking/Smartnode"
-        },
-        {
-            "groupid": "79",
-            "name": "Networking/Switch"
-        },
-        {
-            "groupid": "97",
-            "name": "Networking/SwitchTP"
-        },
-        {
-            "groupid": "49",
-            "name": "OSS"
-        },
-        {
-            "groupid": "48",
-            "name": "Oracle Databases"
-        },
-        {
-            "groupid": "91",
-            "name": "Origin CDNs"
-        },
-        {
-            "groupid": "121",
-            "name": "Pruebas"
-        },
-        {
-            "groupid": "54",
-            "name": "Radios"
-        },
-        {
-            "groupid": "125",
-            "name": "Radius_NMS"
-        },
-        {
-            "groupid": "31",
-            "name": "Radwin V1"
-        },
-        {
-            "groupid": "53",
-            "name": "Rectificadores"
-        },
-        {
-            "groupid": "119",
-            "name": "Rectificadores/ACC"
-        },
-        {
-            "groupid": "118",
-            "name": "Rectificadores/BB"
-        },
-        {
-            "groupid": "120",
-            "name": "Rectificadores/POP"
-        },
-        {
-            "groupid": "108",
-            "name": "Rectificadores/Proteccion"
-        },
-        {
-            "groupid": "99",
-            "name": "Rectificadores/TP"
-        },
-        {
-            "groupid": "122",
-            "name": "Rectificadores_Disable"
-        },
-        {
-            "groupid": "105",
-            "name": "Retificadores"
-        },
-        {
-            "groupid": "40",
-            "name": "Router ICMP V0"
-        },
-        {
-            "groupid": "95",
-            "name": "SBC_TP"
-        },
-        {
-            "groupid": "93",
-            "name": "SONDAS"
-        },
-        {
-            "groupid": "106",
-            "name": "Servers_Disable"
-        },
-        {
-            "groupid": "92",
-            "name": "Servers_TV"
-        },
-        {
-            "groupid": "1",
-            "name": "Templates"
-        },
-        {
-            "groupid": "103",
-            "name": "Templates SNMP Devices"
-        },
-        {
-            "groupid": "37",
-            "name": "Templates/AZT"
-        },
-        {
-            "groupid": "12",
-            "name": "Templates/Applications"
-        },
-        {
-            "groupid": "13",
-            "name": "Templates/Databases"
-        },
-        {
-            "groupid": "113",
-            "name": "Templates/Imagunet"
-        },
-        {
-            "groupid": "8",
-            "name": "Templates/Modules"
-        },
-        {
-            "groupid": "38",
-            "name": "Templates/Network Devices"
-        },
-        {
-            "groupid": "9",
-            "name": "Templates/Network Devices_Vendors"
-        },
-        {
-            "groupid": "101",
-            "name": "Templates/Network devices"
-        },
-        {
-            "groupid": "41",
-            "name": "Templates/Operating Systems"
-        },
-        {
-            "groupid": "10",
-            "name": "Templates/Operating systems"
-        },
-        {
-            "groupid": "11",
-            "name": "Templates/Server hardware"
-        },
-        {
-            "groupid": "36",
-            "name": "Templates/Switches"
-        },
-        {
-            "groupid": "14",
-            "name": "Templates/Virtualization"
-        },
-        {
-            "groupid": "32",
-            "name": "Ubiquity V1"
-        },
-        {
-            "groupid": "33",
-            "name": "Ubiquity V2"
-        },
-        {
-            "groupid": "83",
-            "name": "Vertiv"
-        },
-        {
-            "groupid": "6",
-            "name": "Virtual machines"
-        },
-        {
-            "groupid": "55",
-            "name": "Web Scenario"
-        },
-        {
-            "groupid": "44",
-            "name": "Windows servers"
-        },
-        {
-            "groupid": "56",
-            "name": "ZTESNMPv2"
-        },
-        {
-            "groupid": "15",
-            "name": "Zabbix proxies"
-        },
-        {
-            "groupid": "4",
-            "name": "Zabbix servers"
-        },
-        {
-            "groupid": "112",
-            "name": "five"
-        }
-    ],
-    "id": 1
-}
+[
+    { "id": "58", "name": "3 PAR Data" },
+    { "id": "22", "name": "Alcatel V2" },
+    { "id": "21", "name": "Alcatel V3" },
+    { "id": "85", "name": "AppearTv" },
+    { "id": "29", "name": "CheckPoint V2" },
+    { "id": "30", "name": "Cisco V2" },
+    { "id": "51", "name": "Clientes" },
+    { "id": "60", "name": "Clientes_Disable" },
+    { "id": "124", "name": "Computadores" },
+    { "id": "68", "name": "DNS" },
+    { "id": "64", "name": "DSI_ONTs" },
+    { "id": "5", "name": "Discovered hosts" },
+    { "id": "52", "name": "Dispositivos Auxiliares" },
+    { "id": "75", "name": "Dispositivos Auxiliares/OTU" },
+    { "id": "76", "name": "Dispositivos Auxiliares/Planta" },
+    { "id": "57", "name": "Dummy" },
+    { "id": "86", "name": "Encoders" },
+    { "id": "17", "name": "Ericsson V2" },
+    { "id": "63", "name": "Firewall_Corporativo" },
+    { "id": "104", "name": "Firewalls" },
+    { "id": "87", "name": "Frame Distribuidor" },
+    { "id": "27", "name": "GPON" },
+    { "id": "88", "name": "Gestore_Encoders" },
+    { "id": "59", "name": "H3C" },
+    { "id": "23", "name": "Hewlett Packard V2" },
+    { "id": "20", "name": "Huawei GPON" },
+    { "id": "19", "name": "Huawei V2" },
+    { "id": "7", "name": "Hypervisors" },
+    { "id": "89", "name": "IRDs" },
+    { "id": "35", "name": "Linux servers" },
+    { "id": "102", "name": "LoadBalancerF5" },
+    { "id": "96", "name": "LoadBalancerF5_TP" },
+    { "id": "47", "name": "MSSQL Databases" },
+    { "id": "90", "name": "Media Kind Controller" },
+    { "id": "39", "name": "Mikrotik V2" },
+    { "id": "18", "name": "My Templates" },
+    { "id": "46", "name": "MySQL Databases" },
+    { "id": "84", "name": "Network_disable" },
+    { "id": "50", "name": "Networking" },
+    { "id": "109", "name": "Networking/Agregadores/Concentradores/PE" },
+    { "id": "66", "name": "Networking/BRAS" },
+    { "id": "80", "name": "Networking/CCTV" },
+    { "id": "67", "name": "Networking/CP" },
+    { "id": "111", "name": "Networking/DNS" },
+    { "id": "69", "name": "Networking/DPI" },
+    { "id": "72", "name": "Networking/FOADM" },
+    { "id": "107", "name": "Networking/GW sensores" },
+    { "id": "73", "name": "Networking/IGW" },
+    { "id": "74", "name": "Networking/OLT" },
+    { "id": "98", "name": "Networking/OLT_TP" },
+    { "id": "70", "name": "Networking/Router" },
+    { "id": "110", "name": "Networking/RouterRP" },
+    { "id": "81", "name": "Networking/RouterReflector" },
+    { "id": "94", "name": "Networking/RouterTP" },
+    { "id": "77", "name": "Networking/Servidor" },
+    { "id": "78", "name": "Networking/Smartnode" },
+    { "id": "79", "name": "Networking/Switch" },
+    { "id": "97", "name": "Networking/SwitchTP" },
+    { "id": "49", "name": "OSS" },
+    { "id": "48", "name": "Oracle Databases" },
+    { "id": "91", "name": "Origin CDNs" },
+    { "id": "121", "name": "Pruebas" },
+    { "id": "54", "name": "Radios" },
+    { "id": "125", "name": "Radius_NMS" },
+    { "id": "31", "name": "Radwin V1" },
+    { "id": "53", "name": "Rectificadores" },
+    { "id": "119", "name": "Rectificadores/ACC" },
+    { "id": "118", "name": "Rectificadores/BB" },
+    { "id": "120", "name": "Rectificadores/POP" },
+    { "id": "108", "name": "Rectificadores/Proteccion" },
+    { "id": "99", "name": "Rectificadores/TP" },
+    { "id": "122", "name": "Rectificadores_Disable" },
+    { "id": "105", "name": "Retificadores" },
+    { "id": "40", "name": "Router ICMP V0" },
+    { "id": "95", "name": "SBC_TP" },
+    { "id": "93", "name": "SONDAS" },
+    { "id": "106", "name": "Servers_Disable" },
+    { "id": "92", "name": "Servers_TV" },
+    { "id": "1", "name": "Templates" },
+    { "id": "103", "name": "Templates SNMP Devices" },
+    { "id": "37", "name": "Templates/AZT" },
+    { "id": "12", "name": "Templates/Applications" },
+    { "id": "13", "name": "Templates/Databases" },
+    { "id": "113", "name": "Templates/Imagunet" },
+    { "id": "8", "name": "Templates/Modules" },
+    { "id": "38", "name": "Templates/Network Devices" },
+    { "id": "9", "name": "Templates/Network Devices_Vendors" },
+    { "id": "101", "name": "Templates/Network devices" },
+    { "id": "41", "name": "Templates/Operating Systems" },
+    { "id": "10", "name": "Templates/Operating systems" },
+    { "id": "11", "name": "Templates/Server hardware" },
+    { "id": "36", "name": "Templates/Switches" },
+    { "id": "14", "name": "Templates/Virtualization" },
+    { "id": "32", "name": "Ubiquity V1" },
+    { "id": "33", "name": "Ubiquity V2" },
+    { "id": "83", "name": "Vertiv" },
+    { "id": "6", "name": "Virtual machines" },
+    { "id": "55", "name": "Web Scenario" },
+    { "id": "44", "name": "Windows servers" },
+    { "id": "56", "name": "ZTESNMPv2" },
+    { "id": "15", "name": "Zabbix proxies" },
+    { "id": "4", "name": "Zabbix servers" },
+    { "id": "112", "name": "five" }
+]

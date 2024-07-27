@@ -13,7 +13,7 @@ $(document).ready(function() {
         }).get();
 
         if (startDate && endDate && selectedGroupIds.length && selectedSeverityIds.length) {
-            $("#status-message").removeClass().addClass("status-message status-message_GENERATING").text("Se está generando su informe...");
+            $("#status-message").removeClass().addClass("status-message status-message_GENERATING").text("Se está generando su informe, esto puede tomar un tiempo...");
             $("#download-report").hide(); // Oculta el botón de descarga mientras se genera el informe
 
             // Función para convertir fechas a timestamps UNIX

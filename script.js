@@ -61,6 +61,8 @@ $(document).ready(function() {
         }
     });
 
+    
+
     // Limpiar las fechas seleccionadas
     $("#clear-dates").click(function() {
         $("#start-date").val("");

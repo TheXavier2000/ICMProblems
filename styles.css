@@ -1,56 +1,51 @@
 /* Estilos para los elementos body y html */
 body, html {
-    height: 100%; /* Establece la altura del cuerpo y del documento HTML al 100% de la altura de la ventana del navegador. */
-    margin: 0; /* Elimina los márgenes predeterminados del cuerpo y del documento HTML. */
-    font-family: Arial, sans-serif; /* Establece la fuente predeterminada para el cuerpo y el documento HTML a Arial, y usa cualquier fuente sans-serif si Arial no está disponible. */
-    
+    height: 100%; /* Altura del cuerpo y del documento HTML al 100% de la ventana del navegador */
+    margin: 0; /* Elimina los márgenes predeterminados */
+    font-family: Arial, sans-serif; /* Fuente predeterminada Arial */
 }
 
-/* Estilos para la clase container */
 .container {
-    background-image: url('fondo.png'); /* Establece una imagen de fondo para el contenedor. */
-    background-size: cover; /* Hace que la imagen de fondo cubra todo el contenedor, incluso si esto significa que la imagen tiene que ser recortada. */
-    background-position: center; /* Centra la imagen de fondo en el contenedor. */
-    height: 100%; /* Establece la altura del contenedor al 100% de la altura de su elemento padre. */
-    display: flex; /* Aplica un diseño flexible al contenedor, lo que permite un control más fácil sobre cómo se alinean y distribuyen los elementos hijos. */
-    flex-direction: column; /* Hace que los elementos hijos se apilen verticalmente. */
-    align-items: center; /* Centra los elementos hijos horizontalmente en el contenedor. */
-    justify-content: center; /* Centra los elementos hijos verticalmente en el contenedor. */
-    position: relative; /* Establece la posición del contenedor a relativa, lo que significa que los elementos hijos posicionados absolutamente se posicionarán en relación con este contenedor. */
+    background-color: #225475; /* Color de fondo azul */
+    height: 100%; /* Altura del contenedor al 100% de su elemento padre */
+    display: flex; /* Diseño flexible */
+    flex-direction: column; /* Elementos hijos apilados verticalmente */
+    align-items: center; /* Centra los elementos hijos horizontalmente */
+    justify-content: center; /* Centra los elementos hijos verticalmente */
+    position: relative; /* Posición relativa */
+    overflow: hidden; /* Oculta el desbordamiento */
 }
 
 .logo {
-    position: absolute; /* Posiciona el elemento de manera absoluta en relación con su elemento padre más cercano con posición relativa, fija o absoluta. */
-    top: 20px; /* Coloca el elemento a 20px desde la parte superior del elemento padre. */
-    right: 20px; /* Coloca el elemento a 20px desde el lado derecho del elemento padre. */
+    position: absolute; /* Posiciona el elemento de manera absoluta */
+    top: 5px; /* 20px desde la parte superior */
+    right: 20px; /* 20px desde el lado derecho */
 }
 
 .logo img {
-    height: 50px; /* Establece la altura de la imagen a 50px. */
-    width: auto; /* Establece el ancho de la imagen a auto, lo que significa que se escalará proporcionalmente a la altura. */
+    height: 130px; /* Altura de la imagen a 50px */
+    width: auto; /* Ancho proporcional a la altura */
+    filter: invert(1) brightness(2); /* Invierte los colores y aumenta el brillo */
 }
 
 .title h1 {
     color: white;
-    font-size: 3em;
+    font-size: 2.4em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    font-family: 'Arial', sans-serif; 
 }
 
 .description h3 {
     color: white;
-    font-size: 1em;
-    font-family: 'Arial', sans-serif;
+    font-size: 0.9em;
 }
 
 .form-container {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    font-family: 'Arial', sans-serif;
-    max-width: 600px; /* Limita el ancho máximo del contenedor del formulario */
-    width: 100%; /* Ocupa el 100% del ancho disponible */
-    box-sizing: border-box; /* Incluye el padding y el border en el ancho total */
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco transparente */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 25px; /* Bordes redondeados */
+    max-width: 600px; /* Ancho máximo del contenedor */
+    width: 100%; /* Ancho al 100% */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
 }
 
 /* Estilo para el formulario */
@@ -60,95 +55,62 @@ form {
     align-items: center;
 }
 
-
-
-
-
-/* Estilo para el campo de búsqueda */
-#group-search {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    max-width: 300px; /* Limita el ancho máximo */
+/* Estilo para el campo de búsqueda de grupos */
+#group-search, #severities-search {
+    width: 100%; /* Ancho al 100% */
+    max-width: 300px; /* Ancho máximo */
     padding: 10px; /* Espaciado interno */
     margin: 0 auto; /* Centra el campo horizontalmente */
-    margin-left: 130px; /* Ajusta este valor para mover el campo a la derecha */
     border: 1px solid #ddd; /* Borde sutil */
     border-radius: 4px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
-    transition: all 0.5s ease; /* Transición suave para el enfoque */
+    transition: all 0.5s ease; /* Transición suave */
+    margin-left: 140px; /* Ajusta el margen izquierdo */
 }
-
 
 /* Cambiar el borde del campo de búsqueda al enfocar */
-#group-search:focus {
-    border-color: #4a90e2; /* Color de borde al enfocar */
-    outline: none; /* Eliminar el contorno por defecto */
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave para el enfoque */
+#group-search:focus, #severities-search:focus {
+    border-color: #4a90e2; /* Color del borde al enfocar */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave al enfocar */
 }
-
-
-
-/* Estilo para el campo de búsqueda */
-#severities-search {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    max-width: 300px; /* Limita el ancho máximo */
-    padding: 10px; /* Espaciado interno */
-    margin: 0 auto; /* Centra el campo horizontalmente */
-    margin-left: 130px; /* Ajusta este valor para mover el campo a la derecha */
-    border: 1px solid #ddd; /* Borde sutil */
-    border-radius: 4px; /* Bordes redondeados */
-    font-size: 16px; /* Tamaño de fuente */
-    transition: all 0.5s ease; /* Transición suave para el enfoque */
-}
-
-
-/* Cambiar el borde del campo de búsqueda al enfocar */
-#severities-search:focus {
-    border-color: #4a90e2; /* Color de borde al enfocar */
-    outline: none; /* Eliminar el contorno por defecto */
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave para el enfoque */
-}
-
 
 /* Estilo para el contenedor de los campos de fecha */
 .date-container {
     display: flex;
-    flex-direction: column; /* Los campos de fecha se apilan verticalmente */
-    align-items: center; /* Centra los elementos hijos horizontalmente */
-    gap: 10px; /* Espacio entre los campos de fecha */
+    flex-direction: column; /* Campos apilados verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+    gap: 10px; /* Espacio entre los campos */
     margin-top: 10px;
-    width: 100%; /* Ocupa todo el ancho del contenedor */
+    width: 100%; /* Ancho al 100% */
 }
 
 /* Estilo para los campos de fecha */
-.date-field {
-    width: 100%; /* Ocupa todo el ancho del contenedor */
-    max-width: 300px; /* Limita el ancho máximo */
-}
-
-#start-date, #end-date {
-    width: 100%; /* Ocupa todo el ancho del contenedor */
+.date-field, #start-date, #end-date {
+    width: 100%; /* Ancho al 100% */
+    max-width: 300px; /* Ancho máximo */
     padding: 10px; /* Espaciado interno */
     border: 1px solid #ddd; /* Borde sutil */
     border-radius: 4px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
-    transition: all 0.3s ease; /* Transición suave para el enfoque */
+    transition: all 0.3s ease; /* Transición suave */
 }
 
 /* Cambiar el borde del campo de fecha al enfocar */
 #start-date:focus, #end-date:focus {
-    border-color: #4a90e2; /* Color de borde al enfocar */
-    outline: none; /* Eliminar el contorno por defecto */
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave para el enfoque */
+    border-color: #4a90e2; /* Color del borde al enfocar */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave al enfocar */
 }
 
 /* Estilo para el botón de limpiar fechas */
 #clear-dates {
-    background-color: transparent; /* Sin color de fondo */
+    background-color: transparent; /* Sin fondo */
     border: none; /* Sin borde */
     cursor: pointer; /* Cursor pointer */
     font-size: 18px; /* Tamaño del icono */
     color: #e94e77; /* Color del icono */
-    transition: color 0.3s ease; /* Transición suave para el color */
+    transition: color 0.3s ease; /* Transición suave */
     margin-top: 10px; /* Espaciado superior */
 }
 
@@ -157,16 +119,16 @@ form {
     color: #d43f77; /* Color del icono al pasar el ratón */
 }
 
-/* Estilo para el contenedor de los grupos seleccionados */
-#selected-groups {
+/* Estilo para el contenedor de los grupos y severidades seleccionados */
+#selected-groups, #selected-severities {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias líneas si es necesario */
+    flex-wrap: wrap; /* Permite envolver los elementos */
     gap: 5px; /* Espacio entre los elementos */
     margin-top: 10px; /* Espaciado superior */
 }
 
-/* Estilo para cada grupo seleccionado */
-.group {
+/* Estilo para cada grupo y severidad seleccionada */
+.group, .severity {
     font-size: 0.9em; /* Tamaño de fuente */
     padding: 5px 10px; /* Espaciado interno */
     background-color: #f0f0f0; /* Color de fondo */
@@ -176,15 +138,16 @@ form {
     align-items: center;
 }
 
-.group span.remove-group {
+/* Estilo para el icono de eliminación */
+.group span.remove-group, .severity span.remove-severity {
     color: red;
-    margin-left: 5px; /* Espaciado entre el nombre del grupo y el ícono de eliminación */
+    margin-left: 5px; /* Espaciado entre el nombre y el icono */
     cursor: pointer;
     font-weight: bold;
 }
 
 /* Cambiar el cursor al pasar sobre la X */
-.group span.remove-group:hover {
+.group span.remove-group:hover, .severity span.remove-severity:hover {
     cursor: pointer;
 }
 
@@ -194,23 +157,23 @@ button {
     border: none; /* Sin borde */
     border-radius: 4px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
-    cursor: pointer; /* Cursor pointer para el botón */
-    transition: background-color 0.3s ease; /* Transición suave para el fondo */
+    cursor: pointer; /* Cursor pointer */
+    transition: background-color 0.3s ease; /* Transición suave */
     margin-top: 10px; /* Espaciado superior */
 }
 
 /* Estilo para el botón de generar informe */
 #generate-report {
-    background-color: #4a90e2; /* Color de fondo */
-    color: white; /* Color del texto */
+    background-color: #4a90e2; /* Fondo azul */
+    color: white; /* Texto blanco */
     display: block; /* Ocupa toda la anchura disponible */
-    max-width: 300px; /* Limita el ancho máximo */
+    max-width: 300px; /* Ancho máximo */
     margin: 10px auto; /* Centra el botón horizontalmente */
 }
 
 /* Cambiar el color del botón al pasar el ratón */
 #generate-report:hover {
-    background-color: #357abd; /* Color de fondo al pasar el ratón */
+    background-color: #357abd; /* Fondo azul oscuro al pasar el ratón */
 }
 
 /* Estilo para el enlace de descarga */
@@ -218,53 +181,61 @@ button {
     display: inline-block; /* Alineación en línea */
     padding: 10px 20px; /* Espaciado interno */
     border-radius: 4px; /* Bordes redondeados */
-    background-color: #4a90e2; /* Color de fondo */
-    color: white; /* Color del texto */
+    background-color: #4a90e2; /* Fondo azul */
+    color: white; /* Texto blanco */
     text-decoration: none; /* Sin subrayado */
     text-align: center; /* Alineación del texto */
     margin-top: 10px; /* Espaciado superior */
-    max-width: 300px; /* Limita el ancho máximo */
+    max-width: 300px; /* Ancho máximo */
     display: block; /* Ocupa toda la anchura disponible */
     margin: 10px auto; /* Centra el enlace horizontalmente */
 }
 
 /* Cambiar el color del enlace al pasar el ratón */
 #download-report:hover {
-    background-color: #357abd; /* Color de fondo al pasar el ratón */
+    background-color: #357abd; /* Fondo azul oscuro al pasar el ratón */
 }
 
-
+/* Estilo para los mensajes de estado */
 .status-message {
     font-weight: bold;
-    font-size: 1.5em; /* Ajusta el tamaño según sea necesario */
-    padding: 5px; /* Añade algo de espacio alrededor del texto */
-    border-radius: 25px; /* Opcional: bordes redondeados */
-    background-color: hsl(210, 87%, 47%); /* Fondo azul oscuro */
-    margin-top: 20px; /* Ajusta el valor según sea necesario */
-    color: #FFFFFF; /* Color del texto */
-    text-shadow: 
-        1px 1px 0 #000000,  
-        -1px -1px 0 #000000,
-        1px -1px 0 #000000,
-        -1px 1px 0 #000000; /* Ajusta el color y tamaño del contorno */
+    font-size: 1em; /* Tamaño de fuente */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 25px; /* Bordes redondeados */
+    color: #FFFFFF; /* Texto blanco */
+    text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000; /* Contorno del texto */
 }
 
 .status-message_OK {
-    color: #20FA04; /* Color verde claro para éxito */
-    background-color: #e1e6eb54; /* Fondo blanco transparente */
+    color: #20FA04; /* Texto verde para mensajes OK */
 }
 
 .status-message_ERROR {
-    color: #D7EE05; /* Color amarillo para error */
-    background-color: #e1e6eb54; /* Fondo blanco transparente */
+    color: #FF0000; /* Texto rojo para mensajes de error */
 }
 
 .status-message_INCOMPLETE {
-    color: #00fff2; /* Color naranja para incompleto */
-    background-color: #e1e6eb54; /* Fondo blanco transparente */
+    color: #FFD700; /* Texto dorado para mensajes incompletos */
 }
 
 .status-message_GENERATING {
-    color: #FFFFFF; /* Color blanco para el mensaje de generación */
-    background-color: #e1e6eb54; /* Fondo blanco transparente */
+    color: #FFFFFF; /* Texto blanco para mensajes de generación */
 }
+
+footer {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilo para las etiquetas de los campos de texto */
+label {
+    display: block; /* Hace que la etiqueta ocupe toda la línea */
+    margin-bottom: 7px; /* Espacio debajo de la etiqueta (ajusta el valor según sea necesario) */
+    font-size: 217x; /* Tamaño de la fuente para las etiquetas */
+    color: rgb(5, 5, 5); /* Color del texto de las etiquetas */
+}
+

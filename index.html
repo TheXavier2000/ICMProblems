@@ -25,9 +25,13 @@
             <form>
                 <label for="group-search">Seleccione uno o más grupos de equipos:</label>
                 <input type="text" id="group-search" placeholder="Escriba para buscar grupos">
-                <!-- Contenedor para los grupos seleccionados -->
                 <div id="selected-groups"></div>
                 <input type="hidden" id="selected-group-ids">
+                
+                <input type="text" id="severities-search" placeholder="Ingrese la severidad...">
+                <div id="selected-severities"></div>
+                <input type="hidden" id="selected-severities-ids">
+                
                 
                 <div class="date-container">
                     <div class="date-field">
@@ -39,17 +43,14 @@
                         <input type="text" id="end-date" name="end-date" readonly>
                     </div>
                 </div>
-
             </form>
             <button type="button" id="generate-report">Generar Informe</button>
             <button type="button" id="clear-fields" style="display: none;">Limpiar Campos</button>
-          
         </div>
         <div id="status-message"></div>
     </div>
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-
 </body>
 </html>

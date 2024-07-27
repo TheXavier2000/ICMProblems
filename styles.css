@@ -85,6 +85,30 @@ form {
     box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave para el enfoque */
 }
 
+
+
+/* Estilo para el campo de búsqueda */
+#severities-search {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 300px; /* Limita el ancho máximo */
+    padding: 10px; /* Espaciado interno */
+    margin: 0 auto; /* Centra el campo horizontalmente */
+    margin-left: 130px; /* Ajusta este valor para mover el campo a la derecha */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: all 0.5s ease; /* Transición suave para el enfoque */
+}
+
+
+/* Cambiar el borde del campo de búsqueda al enfocar */
+#severities-search:focus {
+    border-color: #4a90e2; /* Color de borde al enfocar */
+    outline: none; /* Eliminar el contorno por defecto */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave para el enfoque */
+}
+
+
 /* Estilo para el contenedor de los campos de fecha */
 .date-container {
     display: flex;

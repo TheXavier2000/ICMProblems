@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Informes</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../CSS/styles.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="logo">
-            <img src="logoACC.png" alt="Logo Empresarial">
+            <img src="../CSS/logoACC.png" alt="Logo Empresarial">
         </div>
         <div class="title">
             <h1>Generador de Informes</h1>
@@ -28,11 +29,10 @@
                 <div id="selected-groups"></div>
                 <input type="hidden" id="selected-group-ids">
 
-                <label for="group-search">Seleccione una o más severidades: </label>
+                <label for="severities-search">Seleccione una o más severidades:</label>
                 <input type="text" id="severities-search" placeholder="Ingrese la severidad...">
                 <div id="selected-severities"></div>
                 <input type="hidden" id="selected-severities-ids">
-                
                 
                 <div class="date-container">
                     <div class="date-field">
@@ -50,8 +50,12 @@
         </div>
         <div id="status-message"></div>
     </div>
-    <script src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <!-- Ajustar rutas de los scripts -->
+    <script src="../scripts/dates.js" defer></script>
+    <script src="../scripts/jsonQueries.js" defer></script>
+    <script src="../scripts/filters.js" defer></script>
+    <script src="../scripts/reportGeneration.js" defer></script>
+    <script src="../scripts/main.js" defer></script>
+
 </body>
 </html>

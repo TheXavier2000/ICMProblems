@@ -8,9 +8,11 @@ $(document).ready(function() {
         let selectedGroupNames = $("#selected-groups .group").map(function() {
             return $(this).text().trim().replace(' X', '');
         }).get();
-        let selectedSeverityIds = $("#selected-severities").data("selectedSeverityIds") || [];
+        let selectedSeverityIds = $("#selected-severities .severity").map(function() {
+            return $(this).data("id");
+        }).get();
 
-        if (startDate && endDate && selectedGroupIds.length) {
+        if (startDate && endDate && selectedGroupIds.length && selectedSeverityIds.length) {
             $("#status-message").removeClass().addClass("status-message status-message_GENERATING").text("Se está generando su informe...");
             $("#download-report").hide(); // Oculta el botón de descarga mientras se genera el informe
 
@@ -173,7 +175,7 @@ $(document).ready(function() {
                     $("#status-message").removeClass().addClass("status-message status-message_ERROR").text("Error al cargar las severidades.");
                 });
         } else {
-            $("#status-message").removeClass().addClass("status-message status-message_INCOMPLETE").text("Por favor, seleccione las fechas y grupos requeridos.");
+            $("#status-message").removeClass().addClass("status-message status-message_INCOMPLETE").text("Por favor, seleccione las fechas, grupos y severidades requeridos.");
         }
     });
 });

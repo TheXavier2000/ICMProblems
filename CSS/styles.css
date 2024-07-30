@@ -14,17 +14,16 @@ body, html {
     justify-content: center; /* Centra los elementos hijos verticalmente */
     position: relative; /* Posición relativa */
     overflow: hidden; /* Oculta el desbordamiento */
-    
 }
 
 .logo {
     position: absolute; /* Posiciona el elemento de manera absoluta */
-    top: 5px; /* 20px desde la parte superior */
+    top: 20px; /* 20px desde la parte superior */
     right: 20px; /* 20px desde el lado derecho */
 }
 
 .logo img {
-    height: 130px; /* Altura de la imagen a 50px */
+    height: 130px; /* Altura de la imagen a 130px */
     width: auto; /* Ancho proporcional a la altura */
     filter: invert(1) brightness(2); /* Invierte los colores y aumenta el brillo */
 }
@@ -198,6 +197,13 @@ button {
 }
 
 /* Estilo para los mensajes de estado */
+#status-message-container {
+    display: flex; /* Flexbox para alinear el texto y el icono horizontalmente */
+    align-items: center; /* Centra verticalmente el contenido del contenedor */
+    margin-top: 10px; /* Espaciado superior */
+    margin-bottom: 10px; /* Espaciado inferior */
+}
+
 .status-message {
     font-weight: bold;
     font-size: 1em; /* Tamaño de fuente */
@@ -205,8 +211,19 @@ button {
     border-radius: 25px; /* Bordes redondeados */
     color: #FFFFFF; /* Texto blanco */
     text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000; /* Contorno del texto */
+    display: inline-flex; /* Alineación en línea y flexibilidad */
+    align-items: center; /* Centrar verticalmente el texto */
+    margin-left: 10px; /* Espaciado entre el mensaje y el icono */
 }
 
+#loading-icon {
+    width: 70px; /* Tamaño pequeño para el icono */
+    height: 70px; /* Mantener proporción */
+    margin-left: 10px; /* Espaciado entre el texto y el icono */
+    vertical-align: middle; /* Alinear verticalmente el icono */
+}
+
+/* Estilos para los diferentes tipos de mensajes de estado */
 .status-message_OK {
     color: #20FA04; /* Texto verde para mensajes OK */
 }
@@ -222,21 +239,3 @@ button {
 .status-message_GENERATING {
     color: #FFFFFF; /* Texto blanco para mensajes de generación */
 }
-
-footer {
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Estilo para las etiquetas de los campos de texto */
-label {
-    display: block; /* Hace que la etiqueta ocupe toda la línea */
-    margin-bottom: 7px; /* Espacio debajo de la etiqueta (ajusta el valor según sea necesario) */
-    font-size: 217x; /* Tamaño de la fuente para las etiquetas */
-    color: rgb(5, 5, 5); /* Color del texto de las etiquetas */
-}
-

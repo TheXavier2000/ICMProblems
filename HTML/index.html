@@ -46,9 +46,11 @@
                 </div>
             </form>
             <button type="button" id="generate-report">Generar Informe</button>
-            <button type="button" id="clear-fields" style="display: none;">Limpiar Campos</button>
         </div>
-        <div id="status-message"></div>
+        <div id="status-message-container">
+            <span id="status-message"></span>
+            <img id="loading-icon" src="../CSS/loading.gif" alt="Loading..." style="display:none;">
+        </div>
     </div>
     <!-- Ajustar rutas de los scripts -->
     <script src="../scripts/dates.js" defer></script>
@@ -56,6 +58,5 @@
     <script src="../scripts/filters.js" defer></script>
     <script src="../scripts/reportGeneration.js" defer></script>
     <script src="../scripts/main.js" defer></script>
-
 </body>
 </html>

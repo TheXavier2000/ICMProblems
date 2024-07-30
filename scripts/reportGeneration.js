@@ -13,8 +13,10 @@ $(document).ready(function() {
         }).get();
 
         if (startDate && endDate && selectedGroupIds.length && selectedSeverityIds.length) {
-            $("#status-message").removeClass().addClass("status-message status-message_GENERATING").text("Se está generando su informe, esto puede tomar un tiempo...");
+            $("#status-message").removeClass().addClass("status-message status-message_GENERATING").text("Se está generando su informe");
+            $("#loading-icon").show(); // Mostrar el icono de carga
             $("#download-report").hide(); // Oculta el botón de descarga mientras se genera el informe
+
 
             // Función para convertir fechas a timestamps UNIX
             function convertToUnixTimestamp(dateString) {
@@ -201,25 +203,31 @@ $(document).ready(function() {
                             console.error("No se pudo generar el informe. No se obtuvieron datos válidos.");
                             $("#status-message").removeClass().addClass("status-message status-message_ERROR").text("No se pudo generar el informe. No se obtuvieron datos válidos.");
                         }
+
+                        $("#loading-icon").hide(); // Ocultar el icono de carga
                     }).catch(error => {
                         console.error("Error al generar el informe:", error);
                         $("#status-message").removeClass().addClass("status-message status-message_ERROR").text("Error al generar el informe: " + error.message);
+                        $("#loading-icon").hide(); // Ocultar el icono de carga
                     });
                 })
                 .catch(error => {
                     console.error("Error al cargar el JSON de severidades:", error);
                     $("#status-message").removeClass().addClass("status-message status-message_ERROR").text("Error al cargar el JSON de severidades: " + error.message);
+                    $("#loading-icon").hide(); // Ocultar el icono de carga
                 });
         } else {
             console.warn("Debe seleccionar un rango de fechas y al menos un grupo y una severidad.");
             $("#status-message").removeClass().addClass("status-message status-message_INCOMPLETE").text("Debe seleccionar un rango de fechas y al menos un grupo y una severidad.");
+            $("#loading-icon").hide(); // Ocultar el icono de carga si no se completan todos los campos
         }
     });
 
-    $("#clear-dates").click(function() {
-        $("#start-date").val("");
-        $("#end-date").val("");
-        console.log("Campos de fecha limpiados.");
+    $("#clear-filters").click(function() {
+        $("#start-date").val('');
+        $("#end-date").val('');
+        $("#status-message").removeClass().text(''); // Limpiar el mensaje de estado
+        $("#loading-icon").hide(); // Ocultar el icono de carga al limpiar filtros
     });
 
     // Inicializar datepickers

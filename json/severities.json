@@ -1,8 +1,0 @@
-[
-    { "id": "0", "name": "Not Classified" },
-    { "id": "1", "name": "Information"    },
-    { "id": "2", "name": "Warning"        },
-    { "id": "3", "name": "Average"        },
-    { "id": "4", "name": "High"           },
-    { "id": "5", "name": "Disaster"       }
-]

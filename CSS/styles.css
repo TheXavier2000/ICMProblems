@@ -239,3 +239,78 @@ button {
 .status-message_GENERATING {
     color: #FFFFFF; /* Texto blanco para mensajes de generación */
 }
+
+
+
+button:disabled {
+    cursor: not-allowed; /* Cambia el cursor a un icono de no permitido */
+    opacity: 0.6; /* Cambia la opacidad para que el botón parezca inactivo */
+}
+
+/* Estilo para el menú desplegable de autocompletado */
+.ui-autocomplete {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000; /* Asegura que el menú esté por encima de otros elementos */
+}
+
+.ui-menu-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.ui-menu-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para el dropdown de grupos */
+#dropdown-menu {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: absolute;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    width: calc(100% - 2px); /* Ajusta el ancho del menú */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none; /* Asegúrate de que esté oculto por defecto */
+}
+
+#dropdown-menu div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#dropdown-menu div:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para los grupos seleccionados */
+.group {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    position: relative;
+}
+
+.remove-group {
+    cursor: pointer;
+    color: #ff0000;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#status-message-container {
+    margin-top: 20px;
+}
+
+#loading-icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}

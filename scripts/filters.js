@@ -1,98 +1,108 @@
 $(document).ready(function() {
-    // Función para truncar nombres largos
+    // Función para truncar el nombre del grupo si es demasiado largo
     function truncateName(name, maxLength) {
-        return name.length > maxLength ? name.substring(0, maxLength) + "..." : name;
+        if (name.length > maxLength) {
+            return name.substring(0, maxLength) + '...';
+        }
+        return name;
     }
 
-    // Cargar datos para el autocompletado de grupos
-    $.getJSON('../json/groups.json', function(data) {
-        $("#group-search").autocomplete({
-            source: data.map(item => ({
-                label: item.name,
-                value: item.id
-            })),
-            select: function(event, ui) {
-                let selectedGroupId = ui.item.value;
-                let selectedGroupName = ui.item.label;
+    // Lógica de carga de grupos
+    function loadGroups() {
+        let cacheBuster = new Date().getTime();
 
-                // Verificar si el grupo ya está seleccionado
+        $.getJSON('../json/groups.json?v=' + cacheBuster, function(data) {
+            console.log("Datos cargados:", data);
+
+            if (Array.isArray(data)) {
+                $("#group-search").autocomplete({
+                    source: data.map(item => ({
+                        label: item.name,
+                        value: item.id
+                    })),
+                    minLength: 0,
+                    open: function(event, ui) {
+                        $("#dropdown-menu").show(); // Muestra el dropdown-menu al abrir el autocompletado
+                    },
+                    select: function(event, ui) {
+                        let selectedGroupId = ui.item.value;
+                        let selectedGroupName = ui.item.label;
+
+                        if ($("#selected-groups .group[data-id='" + selectedGroupId + "']").length === 0) {
+                            $("#selected-groups").append(
+                                `<div class="group" data-id="${selectedGroupId}">
+                                    ${truncateName(selectedGroupName, 25)} <span class="remove-group" onclick="removeGroup('${selectedGroupId}')">X</span>
+                                </div>`
+                            );
+                            $("#group-search").val("");
+                        }
+
+                        $("#selected-group-message").text("Grupos seleccionados: " + $("#selected-groups .group").map(function() { return $(this).text().trim(); }).get().join(", "));
+                        $("#dropdown-menu").hide(); // Asegúrate de ocultar el dropdown-menu después de seleccionar
+                        return false;
+                    }
+                });
+
+                let dropdownContent = data.map(item => (
+                    `<div data-id="${item.id}">${item.name}</div>`
+                )).join('');
+                $("#dropdown-menu").html(dropdownContent);
+            } else {
+                console.error("El formato de los datos no es un array.");
+                $("#dropdown-menu").html('<div>Error al procesar los datos</div>');
+            }
+
+            $("#dropdown-menu").on('click', 'div', function() {
+                let selectedGroupId = $(this).data('id');
+                let selectedGroupName = $(this).text();
+
                 if ($("#selected-groups .group[data-id='" + selectedGroupId + "']").length === 0) {
                     $("#selected-groups").append(
                         `<div class="group" data-id="${selectedGroupId}">
                             ${truncateName(selectedGroupName, 25)} <span class="remove-group" onclick="removeGroup('${selectedGroupId}')">X</span>
                         </div>`
                     );
-                    $("#group-search").val(""); // Limpiar el campo de búsqueda
+                    $("#group-search").val("");
                 }
 
-                // Actualizar el mensaje de grupos seleccionados
                 $("#selected-group-message").text("Grupos seleccionados: " + $("#selected-groups .group").map(function() { return $(this).text().trim(); }).get().join(", "));
-                $("#group-search").autocomplete("close"); // Cerrar la lista de autocompletado
-                return false; // Evitar que el valor seleccionado se coloque en el campo de búsqueda
-            }
+                $("#dropdown-menu").hide();
+            });
+        }).fail(function(jqxhr, textStatus, error) {
+            console.error("Error al cargar groups.json: ", textStatus, error);
         });
+    }
+
+    loadGroups();
+
+    $("#group-search").on("focus", function() {
+        $("#dropdown-menu").show();
     });
 
-    // Cargar datos para el autocompletado de severidades
-    $.getJSON('../json/severities.json', function(data) {
-        $("#severities-search").autocomplete({
-            source: data.map(item => ({
-                label: item.name,
-                value: item.id
-            })),
-            select: function(event, ui) {
-                let selectedSeverityId = ui.item.value;
-                let selectedSeverityName = ui.item.label;
-    
-                // Guardar el ID de severidad seleccionada en el array selectedSeverityIds
-                let selectedSeverityIds = $("#selected-severities").data("selectedSeverityIds") || [];
-                if (!selectedSeverityIds.includes(selectedSeverityId)) {
-                    selectedSeverityIds.push(selectedSeverityId);
-                    $("#selected-severities").data("selectedSeverityIds", selectedSeverityIds);
-    
-                    $("#selected-severities").append(
-                        `<div class="severity" data-id="${selectedSeverityId}">
-                            ${truncateName(selectedSeverityName, 25)} <span class="remove-severity" onclick="removeSeverity('${selectedSeverityId}')">X</span>
-                        </div>`
-                    );
-                    $("#severities-search").val("");
-                }
-    
-                $("#selected-severity-message").text("Severidades seleccionadas: " + $("#selected-severities .severity").map(function() { return $(this).text().trim(); }).get().join(", "));
-                $("#severities-search").autocomplete("close");
-                return false;
-            }
-        });
+    $(document).on('mousedown', function(event) {
+        if (!$(event.target).closest('#dropdown-menu, #group-search').length) {
+            $("#dropdown-menu").hide();
+        }
     });
-    
-    function removeSeverity(severityId) {
-        let selectedSeverityIds = $("#selected-severities").data("selectedSeverityIds") || [];
-        selectedSeverityIds = selectedSeverityIds.filter(id => id !== severityId);
-        $("#selected-severities").data("selectedSeverityIds", selectedSeverityIds);
-    
-        $(`#selected-severities .severity[data-id='${severityId}']`).remove();
-    
-        $("#selected-severity-message").text("Severidades seleccionadas: " + $("#selected-severities .severity").map(function() { return $(this).text().trim(); }).get().join(", "));
-    }
-    
-    function truncateName(name, maxLength) {
-        return name.length > maxLength ? name.substring(0, maxLength - 3) + '...' : name;
-    }
-    
 
-    // Función para eliminar un grupo seleccionado
-    window.removeGroup = function(groupId) {
-        $(`#selected-groups .group[data-id='${groupId}']`).remove();
-        $("#selected-group-message").text("Grupos seleccionados: " + $("#selected-groups .group").map(function() { return $(this).text().trim(); }).get().join(", "));
-    };
+    $("#generate-report").on("click", function() {
+        $(this).prop("disabled", true);
+        $("#status-message").text("Generando informe...");
+        $("#loading-icon").show();
 
-    // Función para eliminar una severidad seleccionada
-    window.removeSeverity = function(severityId) {
-        let selectedSeverityIds = $("#selected-severities").data("selectedSeverityIds") || [];
-        selectedSeverityIds = selectedSeverityIds.filter(id => id !== severityId);
-        $("#selected-severities").data("selectedSeverityIds", selectedSeverityIds);
+        setTimeout(function() {
+            $("#status-message").text("Informe generado.");
+            $("#loading-icon").hide();
+            $("#generate-new-report").show();
+            $("#generate-report").prop("disabled", false);
+        }, 2000);
+    });
 
-        $(`#selected-severities .severity[data-id='${severityId}']`).remove();
-        $("#selected-severity-message").text("Severidades seleccionadas: " + $("#selected-severities .severity").map(function() { return $(this).text().trim(); }).get().join(", "));
-    };
+    $("#generate-new-report").on("click", function() {
+        $("#group-search").val("");
+        $("#selected-groups").empty();
+        $("#selected-group-ids").val("");
+        $("#generate-report").show();
+        $(this).hide();
+    });
 });

@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
 </head>
 <body>
     <div class="container">
@@ -24,16 +25,12 @@
         </div>
         <div class="form-container">
             <form>
-                <label for="group-search">Seleccione uno o más grupos de equipos:</label>
-                <input type="text" id="group-search" placeholder="Ingrese los grupos...">
+                <label for="group-search">Ingrese los grupos de equipos:</label>
+                <input id="group-search" placeholder="Ingrese los grupos...">
                 <div id="selected-groups"></div>
                 <input type="hidden" id="selected-group-ids">
+                <div id="dropdown-menu"></div> <!-- El dropdown estará aquí -->
 
-                <label for="severities-search">Seleccione una o más severidades:</label>
-                <input type="text" id="severities-search" placeholder="Ingrese la severidad...">
-                <div id="selected-severities"></div>
-                <input type="hidden" id="selected-severities-ids">
-                
                 <div class="date-container">
                     <div class="date-field">
                         <label for="start-date">Fecha de inicio:</label>
@@ -46,13 +43,13 @@
                 </div>
             </form>
             <button type="button" id="generate-report">Generar Informe</button>
+            <button type="button" id="generate-new-report" style="display:none;">Generar Nuevo Informe</button>
         </div>
         <div id="status-message-container">
             <span id="status-message"></span>
             <img id="loading-icon" src="../CSS/loading.gif" alt="Loading..." style="display:none;">
         </div>
     </div>
-    <!-- Ajustar rutas de los scripts -->
     <script src="../scripts/dates.js" defer></script>
     <script src="../scripts/jsonQueries.js" defer></script>
     <script src="../scripts/filters.js" defer></script>

@@ -1,0 +1,9 @@
+[
+    { "id": "109", "name": "Networking/Agregadores/Concentradores/PE" },
+    { "id": "70", "name": "Networking/Router" },
+    { "id": "79", "name": "Networking/Switch" },
+    { "id": "74", "name": "Networking/OLT" },
+    { "id": "84", "name": "Network_disable" },
+    { "id": "52", "name": "Dispositivos Auxiliares" },
+    { "id": "53", "name": "Rectificadores" }
+]

@@ -1,0 +1,337 @@
+/* Estilos para los elementos body y html */
+body, html {
+    height: 100%; /* Altura del cuerpo y del documento HTML al 100% de la ventana del navegador */
+    margin: 0; /* Elimina los márgenes predeterminados */
+    font-family: Arial, sans-serif; /* Fuente predeterminada Arial */
+}
+
+.container {
+    background-color: #225475; /* Color de fondo azul */
+    height: 100%; /* Altura del contenedor al 100% de su elemento padre */
+    display: flex; /* Diseño flexible */
+    flex-direction: column; /* Elementos hijos apilados verticalmente */
+    align-items: center; /* Centra los elementos hijos horizontalmente */
+    justify-content: center; /* Centra los elementos hijos verticalmente */
+    position: relative; /* Posición relativa */
+    overflow: hidden; /* Oculta el desbordamiento */
+}
+
+.logo {
+    position: absolute; /* Posiciona el elemento de manera absoluta */
+    top: 20px; /* 20px desde la parte superior */
+    right: 20px; /* 20px desde el lado derecho */
+}
+
+.logo img {
+    height: 130px; /* Altura de la imagen a 130px */
+    width: auto; /* Ancho proporcional a la altura */
+    filter: invert(1) brightness(2); /* Invierte los colores y aumenta el brillo */
+}
+
+.title h1 {
+    color: white;
+    font-size: 2.4em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.description h3 {
+    color: white;
+    font-size: 0.9em;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco transparente */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 25px; /* Bordes redondeados */
+    max-width: 600px; /* Ancho máximo del contenedor */
+    width: 100%; /* Ancho al 100% */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
+
+/* Estilo para el formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo para el campo de búsqueda de grupos */
+#group-search {
+    width: 100%; /* Ancho al 100% */
+    max-width: 300px; /* Ancho máximo */
+    padding: 10px; /* Espaciado interno */
+    margin: 0 auto; /* Centra el campo horizontalmente */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: all 0.5s ease; /* Transición suave */
+    margin-left: 140px; /* Ajusta el margen izquierdo */
+}
+
+/* Cambiar el borde del campo de búsqueda al enfocar */
+#group-search:focus {
+    border-color: #4a90e2; /* Color del borde al enfocar */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave al enfocar */
+}
+
+/* Estilo para el contenedor de los campos de fecha */
+.date-container {
+    display: flex;
+    flex-direction: column; /* Campos apilados verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+    gap: 10px; /* Espacio entre los campos */
+    margin-top: 10px;
+    width: 100%; /* Ancho al 100% */
+}
+
+/* Estilo para los campos de fecha */
+.date-field, #start-date, #end-date {
+    width: 100%; /* Ancho al 100% */
+    max-width: 300px; /* Ancho máximo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Cambiar el borde del campo de fecha al enfocar */
+#start-date:focus, #end-date:focus {
+    border-color: #4a90e2; /* Color del borde al enfocar */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave al enfocar */
+}
+
+/* Estilo para el botón de limpiar fechas */
+#clear-dates {
+    background-color: transparent; /* Sin fondo */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cursor pointer */
+    font-size: 18px; /* Tamaño del icono */
+    color: #e94e77; /* Color del icono */
+    transition: color 0.3s ease; /* Transición suave */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+/* Cambiar el color del icono al pasar el ratón */
+#clear-dates:hover {
+    color: #d43f77; /* Color del icono al pasar el ratón */
+}
+
+/* Estilo para el contenedor de los grupos y severidades seleccionados */
+#selected-groups, #selected-severities {
+    display: flex;
+    flex-wrap: wrap; /* Permite envolver los elementos */
+    gap: 5px; /* Espacio entre los elementos */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+/* Estilo para cada grupo y severidad seleccionada */
+.group, .severity {
+    font-size: 0.9em; /* Tamaño de fuente */
+    padding: 5px 10px; /* Espaciado interno */
+    background-color: #f0f0f0; /* Color de fondo */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para el icono de eliminación */
+.group span.remove-group, .severity span.remove-severity {
+    color: red;
+    margin-left: 5px; /* Espaciado entre el nombre y el icono */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Cambiar el cursor al pasar sobre la X */
+.group span.remove-group:hover, .severity span.remove-severity:hover {
+    cursor: pointer;
+}
+
+/* Estilo general para los botones */
+button {
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cursor pointer */
+    transition: background-color 0.3s ease; /* Transición suave */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+/* Estilo para el botón de generar informe */
+#generate-report {
+    background-color: #4a90e2; /* Fondo azul */
+    color: white; /* Texto blanco */
+    display: block; /* Ocupa toda la anchura disponible */
+    max-width: 300px; /* Ancho máximo */
+    margin: 10px auto; /* Centra el botón horizontalmente */
+}
+
+/* Cambiar el color del botón al pasar el ratón */
+#generate-report:hover {
+    background-color: #357abd; /* Fondo azul oscuro al pasar el ratón */
+}
+
+/* Estilo para el enlace de descarga */
+#download-report {
+    display: inline-block; /* Alineación en línea */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #4a90e2; /* Fondo azul */
+    color: white; /* Texto blanco */
+    text-decoration: none; /* Sin subrayado */
+    text-align: center; /* Alineación del texto */
+    margin-top: 10px; /* Espaciado superior */
+    max-width: 300px; /* Ancho máximo */
+    display: block; /* Ocupa toda la anchura disponible */
+    margin: 10px auto; /* Centra el enlace horizontalmente */
+}
+
+/* Cambiar el color del enlace al pasar el ratón */
+#download-report:hover {
+    background-color: #357abd; /* Fondo azul oscuro al pasar el ratón */
+}
+
+/* Estilo para los mensajes de estado */
+#status-message-container {
+    display: flex; /* Flexbox para alinear el texto y el icono horizontalmente */
+    align-items: center; /* Centra verticalmente el contenido del contenedor */
+    margin-top: 0px; /* Espaciado superior */
+ 
+}
+
+.status-message {
+    font-weight: bold;
+    font-size: 1em; /* Tamaño de fuente */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 25px; /* Bordes redondeados */
+    color: #FFFFFF; /* Texto blanco */
+    text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000; /* Contorno del texto */
+    display: inline-flex; /* Alineación en línea y flexibilidad */
+    align-items: center; /* Centrar verticalmente el texto */
+    margin-left: 10px; /* Espaciado entre el mensaje y el icono */
+}
+
+#loading-icon {
+    width: 70px; /* Tamaño pequeño para el icono */
+    height: 70px; /* Mantener proporción */
+    margin-left: 10px; /* Espaciado entre el texto y el icono */
+    vertical-align: middle; /* Alinear verticalmente el icono */
+}
+
+/* Estilos para los diferentes tipos de mensajes de estado */
+.status-message_OK {
+    color: #20FA04; /* Texto verde para mensajes OK */
+}
+
+.status-message_ERROR {
+    color: #FF0000; /* Texto rojo para mensajes de error */
+}
+
+.status-message_INCOMPLETE {
+    color: #FFD700; /* Texto dorado para mensajes incompletos */
+}
+
+.status-message_GENERATING {
+    color: #FFFFFF; /* Texto blanco para mensajes de generación */
+}
+
+
+
+button:disabled {
+    cursor: not-allowed; /* Cambia el cursor a un icono de no permitido */
+    opacity: 0.6; /* Cambia la opacidad para que el botón parezca inactivo */
+}
+
+/* Estilo para el menú desplegable de autocompletado */
+.ui-autocomplete {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000; /* Asegura que el menú esté por encima de otros elementos */
+}
+
+.ui-menu-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.ui-menu-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para el dropdown de grupos */
+#dropdown-menu {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: absolute;
+    z-index: 1000;
+    max-height: 500px;
+    overflow-y: auto;
+    width: calc(100% - 2px); /* Ajusta el ancho del menú */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none; /* Asegúrate de que esté oculto por defecto */
+    max-width: 350px; /* Ancho máximo */
+    transition: all 0.7s ease; /* Transición suave */
+}
+
+#dropdown-menu div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#dropdown-menu div:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para los grupos seleccionados */
+.group {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    position: relative;
+}
+
+.remove-group {
+    cursor: pointer;
+    color: #ff0000;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#status-message-container {
+    margin-top: 7px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 00px;
+    padding: 0px;
+    color: #fff;
+    font-size: 10px;
+}
+
+footer p {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px; /* Tamaño de fuente general */
+}
+
+footer .firma {
+    display: block;
+    margin-top: 0px;
+    font-family: 'Great Vibes', cursive; /* Fuente cursiva */
+    font-size: 14px;
+    color: #fff;
+    margin-left: 10px; /* Espaciado a la izquierda del span */
+}

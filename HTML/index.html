@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../CSS/icon.ico" type="">
+    <title>Generador de Informes</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="../CSS/logoACC.png" alt="Logo Empresarial">
+        </div>
+        <div class="title">
+            <h1>Generador de Informes</h1>
+        </div>
+        <div class="description">
+            <h3>Complete todos los campos para generar un informe de los equipos que han tenido el problema 'Unavailable by ICMP ping' en el rango de tiempo seleccionado</h3>
+        </div>
+        <div class="form-container">
+            <form>
+                <label for="group-search">Seleccione los grupos de equipos:</label>
+                <input id="group-search" placeholder="" readonly>
+                <div id="selected-groups"></div>
+                <input type="hidden" id="selected-group-ids">
+                <div id="dropdown-menu"></div> <!-- El dropdown estará aquí -->
+
+                <div class="date-container">
+                    <div class="date-field">
+                        <label for="start-date">Fecha de inicio:</label>
+                        <input type="text" id="start-date" name="start-date" readonly>
+                    </div>
+                    <div class="date-field">
+                        <label for="end-date">Fecha final:</label>
+                        <input type="text" id="end-date" name="end-date" readonly>
+                    </div>
+                </div>
+            </form>
+            <button type="button" id="generate-report">Generar Informe</button>
+           
+        </div>
+        <div id="status-message-container">
+            <span id="status-message"></span>
+            <img id="loading-icon" src="../CSS/loading.gif" alt="Loading..." style="display:none;">
+            <button type="button" id="generate-new-report" style="display:none;">Generar Nuevo Informe</button>
+        </div>
+        <footer>
+            <p>Azteca Comunicaciones 2024 &reg;<span class="firma">J L</span></p> 
+        </footer>
+    </div>
+
+    <script src="../scripts/dates.js" defer></script>
+    <script src="../scripts/jsonQueries.js" defer></script>
+    <script src="../scripts/filters.js" defer></script>
+    <script src="../scripts/reportGeneration.js" defer></script>
+    <script src="../scripts/main.js" defer></script>
+</body>
+</html>

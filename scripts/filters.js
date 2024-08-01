@@ -86,22 +86,23 @@ $(document).ready(function() {
     });
 
     $("#generate-report").on("click", function() {
-        $(this).prop("disabled", true);
-        $("#status-message").removeClass().addClass("status-message status-message_INCOMPLETE").text("Generando informe...");
+        $("#status-message").text("Generando informe...");
         $("#loading-icon").show();
+        // Eliminar o comentar la línea que desactiva el botón
+        // $(this).prop("disabled", true);
+
+        // Llamar a la función para generar el informe (si es necesario)
+        // generateReport(); 
     });
-    
+
     $("#generate-new-report").on("click", function() {
-        // Solo permitir limpiar los campos si el botón no está deshabilitado
-        if (!$(this).prop("disabled")) {
-            $("#group-search").val("");
-            $("#selected-groups").empty();
-            $("#selected-group-ids").val("");
-            $("#generate-report").show();
-            $("#start-date").val("");
-            $("#end-date").val("");
-            $(this).hide();
-        }
+        $("#group-search").val("");
+        $("#selected-groups").empty();
+        $("#selected-group-ids").val("");
+        $("#generate-report").show();
+        $("#start-date").val("");
+        $("#end-date").val("");
+        $(this).hide();
     });
-    
+
 });

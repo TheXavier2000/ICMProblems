@@ -46,27 +46,52 @@ body, html {
     max-width: 600px; /* Ancho máximo del contenedor */
     width: 100%; /* Ancho al 100% */
     box-sizing: border-box; /* Incluye padding y border en el ancho total */
+    margin: 0 auto; /* Centra el formulario horizontalmente */
 }
+
+
+.form-container form {
+    display: flex;
+    flex-direction: column; /* Organiza los campos en columna */
+}
+
+.form-container label {
+    margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+}
+
+.form-container input {
+    width: 100%; /* Ancho al 100% del contenedor */
+    max-width: 400px; /* Ajusta el ancho máximo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-bottom: 10px; /* Espacio debajo de cada campo */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
+
 
 /* Estilo para el formulario */
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%; /* Ancho al 100% del contenedor */
+    max-width: 600px; /* Ancho máximo del formulario */
 }
 
 /* Estilo para el campo de búsqueda de grupos */
 #group-search {
-    width: 100%; /* Ancho al 100% */
-    max-width: 300px; /* Ancho máximo */
+    width: calc(100% - 160px); /* Ajusta el ancho al 100% del contenedor menos un margen extra */
+    max-width: 100px; /* Aumenta el ancho máximo del campo */
     padding: 10px; /* Espaciado interno */
-    margin: 0 auto; /* Centra el campo horizontalmente */
     border: 1px solid #ddd; /* Borde sutil */
     border-radius: 4px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
-    transition: all 0.5s ease; /* Transición suave */
-    margin-left: 140px; /* Ajusta el margen izquierdo */
+    margin: 0 auto; /* Centra el campo horizontalmente dentro del formulario */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
 }
+
 
 /* Cambiar el borde del campo de búsqueda al enfocar */
 #group-search:focus {
@@ -83,10 +108,11 @@ form {
     gap: 10px; /* Espacio entre los campos */
     margin-top: 10px;
     width: 100%; /* Ancho al 100% */
+    justify-content: center; /* Centra los campos de fecha horizontalmente */
 }
 
 /* Estilo para los campos de fecha */
-.date-field, #start-date, #end-date {
+.date-field, #start-date, #end-date, #dropdown-menu, #group-search {
     width: 100%; /* Ancho al 100% */
     max-width: 300px; /* Ancho máximo */
     padding: 10px; /* Espaciado interno */
@@ -94,6 +120,7 @@ form {
     border-radius: 4px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
     transition: all 0.3s ease; /* Transición suave */
+    flex: 1; /* Permite que cada campo de fecha ocupe el mismo espacio */
 }
 
 /* Cambiar el borde del campo de fecha al enfocar */
@@ -201,7 +228,7 @@ button {
     display: flex; /* Flexbox para alinear el texto y el icono horizontalmente */
     align-items: center; /* Centra verticalmente el contenido del contenedor */
     margin-top: 0px; /* Espaciado superior */
- 
+    margin-bottom: 0px; /* Espaciado inferior */
 }
 
 .status-message {
@@ -210,38 +237,30 @@ button {
     padding: 10px; /* Espaciado interno */
     border-radius: 25px; /* Bordes redondeados */
     color: #FFFFFF; /* Texto blanco */
-    text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000; /* Contorno del texto */
-    display: inline-flex; /* Alineación en línea y flexibilidad */
-    align-items: center; /* Centrar verticalmente el texto */
-    margin-left: 10px; /* Espaciado entre el mensaje y el icono */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra del texto */
 }
 
-#loading-icon {
-    width: 70px; /* Tamaño pequeño para el icono */
-    height: 70px; /* Mantener proporción */
-    margin-left: 10px; /* Espaciado entre el texto y el icono */
-    vertical-align: middle; /* Alinear verticalmente el icono */
-}
-
-/* Estilos para los diferentes tipos de mensajes de estado */
+/* Estilos específicos para los mensajes de estado */
 .status-message_OK {
-    color: #20FA04; /* Texto verde para mensajes OK */
+    background-color: #4CAF50; /* Fondo verde para mensajes de éxito */
 }
 
 .status-message_ERROR {
-    color: #FF0000; /* Texto rojo para mensajes de error */
+    background-color: #F44336; /* Fondo rojo para mensajes de error */
 }
 
 .status-message_INCOMPLETE {
-    color: #FFD700; /* Texto dorado para mensajes incompletos */
+    background-color: #FF9800; /* Fondo naranja para mensajes incompletos */
 }
 
 .status-message_GENERATING {
-    color: #FFFFFF; /* Texto blanco para mensajes de generación */
+    background-color: #2196F3; /* Fondo azul para mensajes de generación */
 }
 
 
 
+
+/* Estilo para botones deshabilitados */
 button:disabled {
     cursor: not-allowed; /* Cambia el cursor a un icono de no permitido */
     opacity: 0.6; /* Cambia la opacidad para que el botón parezca inactivo */
@@ -250,88 +269,101 @@ button:disabled {
 /* Estilo para el menú desplegable de autocompletado */
 .ui-autocomplete {
     border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    max-height: 200px; /* Altura máxima del menú */
+    overflow-y: auto; /* Desplazamiento vertical si es necesario */
+    overflow-x: hidden; /* Oculta el desplazamiento horizontal */
     z-index: 1000; /* Asegura que el menú esté por encima de otros elementos */
 }
 
 .ui-menu-item {
-    padding: 8px;
-    cursor: pointer;
+    padding: 8px; /* Espaciado interno */
+    cursor: pointer; /* Cursor tipo pointer para elementos interactivos */
 }
 
 .ui-menu-item:hover {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
 }
 
 /* Estilo para el dropdown de grupos */
 #dropdown-menu {
-    border: 1px solid #ccc;
-    background-color: #fff;
-    position: absolute;
-    z-index: 1000;
-    max-height: 500px;
-    overflow-y: auto;
+    border: 1px solid #ccc; /* Borde del menú */
+    background-color: #fff; /* Fondo blanco */
+    position: absolute; /* Posición absoluta para superponer el menú */
+    z-index: 100; /* Asegura que el menú esté por encima de otros elementos */
+    max-height: 300px; /* Altura máxima del menú */
+    overflow-y: auto; /* Desplazamiento vertical si es necesario */
     width: calc(100% - 2px); /* Ajusta el ancho del menú */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 350px; /* Ancho máximo del menú */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra del menú */
     display: none; /* Asegúrate de que esté oculto por defecto */
-    max-width: 350px; /* Ancho máximo */
     transition: all 0.7s ease; /* Transición suave */
+    left: 50%; /* Posiciona el borde izquierdo del menú al centro del contenedor */
+    transform: translateX(-50%); /* Desplaza el menú a la izquierda para centrarlo */
 }
 
 #dropdown-menu div {
-    padding: 8px;
-    cursor: pointer;
+    padding: 8px; /* Espaciado interno */
+    cursor: pointer; /* Cursor tipo pointer para elementos interactivos */
 }
 
 #dropdown-menu div:hover {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
 }
 
 /* Estilo para los grupos seleccionados */
 .group {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-    position: relative;
+    display: inline-block; /* Alinea los elementos en línea */
+    padding: 5px 10px; /* Espaciado interno */
+    margin: 5px; /* Margen alrededor del grupo */
+    border: 1px solid #ccc; /* Borde del grupo */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #e0e0e0; /* Color de fondo */
+    position: relative; /* Posición relativa para el icono de eliminación */
 }
 
 .remove-group {
-    cursor: pointer;
-    color: #ff0000;
-    font-weight: bold;
-    margin-left: 5px;
+    cursor: pointer; /* Cursor tipo pointer para el icono de eliminación */
+    color: #ff0000; /* Color del icono de eliminación */
+    font-weight: bold; /* Negrita */
+    margin-left: 5px; /* Espaciado a la izquierda del icono */
 }
 
+/* Estilo para el contenedor del mensaje de estado */
 #status-message-container {
-    margin-top: 7px;
+    margin-top: 7px; /* Espaciado superior */
 }
 
+/* Estilo para el pie de página */
 footer {
-    text-align: center;
-    margin-top: 00px;
-    padding: 0px;
-    color: #fff;
-    font-size: 10px;
+    text-align: center; /* Alineación del texto al centro */
+    margin-top: 3px; /* Espaciado superior */
+    padding: 0; /* Sin espaciado interno */
+    color: #fff; /* Texto blanco */
+    font-size: 10px; /* Tamaño de fuente */
 }
 
+/* Estilo para los párrafos en el pie de página */
 footer p {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0; /* Sin margen */
+    display: flex; /* Diseño flexible */
+    justify-content: center; /* Centra el texto horizontalmente */
+    align-items: center; /* Centra el texto verticalmente */
     font-size: 12px; /* Tamaño de fuente general */
 }
 
+/* Estilo para la firma en el pie de página */
 footer .firma {
-    display: block;
-    margin-top: 0px;
+    display: block; /* Muestra el elemento como bloque */
+    margin-top: 0; /* Sin margen superior */
     font-family: 'Great Vibes', cursive; /* Fuente cursiva */
-    font-size: 14px;
-    color: #fff;
-    margin-left: 10px; /* Espaciado a la izquierda del span */
+    font-size: 14px; /* Tamaño de fuente */
+    color: #fff; /* Texto blanco */
+    margin-left: 10px; /* Espaciado a la izquierda */
+}
+
+/* Estilo para el icono de carga */
+#loading-icon {
+    width: 70px; /* Ancho del icono */
+    height: 70px; /* Altura del icono */
+    vertical-align: middle; /* Alineación vertical en el centro */
 }

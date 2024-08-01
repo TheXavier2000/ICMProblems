@@ -3,23 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../CSS/icon.ico" type="">
+    <link rel="shortcut icon" href="../CSS/icon.png" type="image/x-icon">
+
     <title>Generador de Informes</title>
     <link rel="stylesheet" href="../CSS/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-
-
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo adicional para asegurar la alineación */
+        .form-container {
+            background: rgba(255, 255, 255, 0.8); /* Fondo blanco transparente */
+            padding: 10px; /* Espaciado interno */
+            border-radius: 25px; /* Bordes redondeados */
+            max-width: 600px; /* Ancho máximo del contenedor */
+            width: 100%; /* Ancho al 100% */
+            box-sizing: border-box; /* Incluye padding y border en el ancho total */
+            margin: 0 auto; /* Centra el formulario horizontalmente */
+        }
+        
+        .form-container form {
+            display: flex;
+            flex-direction: column; /* Organiza los campos en columna */
+        }
+        
+        .form-container label {
+            margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+        }
+        
+        .form-container input {
+            width: 100%; /* Ancho al 100% del contenedor */
+            max-width: 400px; /* Ajusta el ancho máximo */
+            padding: 10px; /* Espaciado interno */
+            border: 1px solid #ddd; /* Borde sutil */
+            border-radius: 4px; /* Bordes redondeados */
+            font-size: 16px; /* Tamaño de fuente */
+            margin-bottom: 10px; /* Espacio debajo de cada campo */
+            box-sizing: border-box; /* Incluye padding y border en el ancho total */
+        }
+        
+        .date-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Espacio entre los campos de fecha */
+        }
 
+        .date-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .date-field input {
+            width: calc(100% - 20px); /* Ajusta el ancho para incluir padding */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -52,7 +93,6 @@
                 </div>
             </form>
             <button type="button" id="generate-report">Generar Informe</button>
-           
         </div>
         <div id="status-message-container">
             <span id="status-message"></span>
@@ -60,7 +100,7 @@
             <button type="button" id="generate-new-report" style="display:none;">Generar Nuevo Informe</button>
         </div>
         <footer>
-            <p>Azteca Comunicaciones 2024 &reg;<span class="firma">J L</span></p> 
+            <p>Azteca Comunicaciones &reg; 2024 <span class="firma">J L</span></p>
         </footer>
     </div>
 

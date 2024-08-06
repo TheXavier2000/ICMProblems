@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../CSS/icon.png" type="image/x-icon">
-
     <title>Generador de Informes</title>
     <link rel="stylesheet" href="../CSS/styles.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -60,6 +59,85 @@
         .date-field input {
             width: calc(100% - 20px); /* Ajusta el ancho para incluir padding */
         }
+
+        /* Estilo para el contenedor del mensaje de estado */
+        #status-message-container {
+            display: flex;
+            align-items: center; /* Alinea los elementos verticalmente */
+            width: 100%;
+            max-width: 600px; /* Ajusta según sea necesario */
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative; /* Asegura que los elementos hijos se posicionen de manera relativa */
+            box-sizing: border-box; /* Incluye padding y border en el ancho total */
+        }
+
+        /* Estilo para el mensaje de estado */
+        #status-message {
+            flex: 1; /* Ocupa el espacio disponible horizontalmente */
+            margin-right: 10px; /* Espacio entre el mensaje y el GIF */
+            padding: 10px;
+            box-sizing: border-box; /* Incluye padding y border en el ancho total */
+            overflow-wrap: break-word; /* Permite que el texto largo se ajuste al ancho */
+            white-space: normal; /* Permite que el texto se ajuste en varias líneas */
+            background-color: #2260b365; /* Fondo gris claro */
+            border: 1px solid #0476e073; /* Borde sutil */
+            border-radius: 4px; /* Bordes redondeados */
+            max-height: 100px; /* Ajusta la altura máxima según el contenido esperado */
+            max-width: 300px; /* Ajusta el ancho máximo según tus necesidades */
+            text-align: left; /* Alinea el texto a la izquierda */
+            vertical-align: top; /* Alinea el texto a la parte superior */
+            display: none; /* Oculta el mensaje de estado inicialmente */
+        }
+
+        /* Estilo para el GIF de carga */
+        #loading-icon {
+            width: 70px; /* Ajusta según el tamaño del GIF */
+            height: 70px; /* Ajusta según el tamaño del GIF */
+            margin: 0 20px; /* Espacio entre el GIF y la barra de progreso */
+            display: none; /* Oculta el GIF inicialmente */
+        }
+
+        /* Estilo para el contenedor de la barra de progreso */
+        #progress-container {
+            display: flex;
+            flex-direction: column; /* Coloca los elementos uno encima del otro */
+            align-items: flex-start; /* Alinea el contenido a la izquierda */
+            margin-left: 20px; /* Espacio entre el GIF y la barra de progreso */
+            display: none; /* Oculta el contenedor de la barra de progreso inicialmente */
+            width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+        }
+
+        /* Estilo para la barra de progreso */
+        #progress-bar {
+            width: 100%; /* Ajusta el ancho según tus necesidades */
+            height: 20px;
+            border-radius: 5px;
+            appearance: none;
+            background-color: #e0e0e0; /* Fondo de la barra de progreso */
+            border: none;
+        }
+
+        #progress-bar::-webkit-progress-bar {
+            background-color: #e0e0e0; /* Fondo de la barra de progreso para WebKit */
+            border-radius: 5px;
+        }
+
+        #progress-bar::-webkit-progress-value {
+            background-color: #4caf50; /* Color del progreso para WebKit */
+            border-radius: 5px;
+        }
+
+        /* Estilo para el porcentaje de la barra de progreso */
+        #progress-percentage {
+            display: block; /* Asegúrate de que el porcentaje esté visible */
+            color: white;
+            font-weight: bold;
+            text-align: center; /* Centra el porcentaje horizontalmente */
+            margin-top: 5px; /* Espacio encima del porcentaje */
+        }
+
     </style>
 </head>
 <body>
@@ -92,12 +170,16 @@
                     </div>
                 </div>
             </form>
+            
             <button type="button" id="generate-report">Generar Informe</button>
         </div>
         <div id="status-message-container">
             <span id="status-message"></span>
-            <img id="loading-icon" src="../CSS/loading.gif" alt="Loading..." style="display:none;">
-            <button type="button" id="generate-new-report" style="display:none;">Generar Nuevo Informe</button>
+            <img id="loading-icon" src="../CSS/loading.gif" alt="Loading...">
+            <div id="progress-container">
+                <progress id="progress-bar" value="0" max="100"></progress>
+                <span id="progress-percentage">0%</span>
+            </div>
         </div>
         <footer>
             <p>Azteca Comunicaciones &reg; 2024 <span class="firma">J L</span></p>

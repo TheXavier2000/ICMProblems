@@ -1,0 +1,4 @@
+[
+    { "id": "1", "name": "Unavailable by ICMP ping" },
+    { "id": "2", "name": "Puerta Abierta" }
+]

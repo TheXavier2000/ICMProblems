@@ -1,12 +1,12 @@
 $(document).ready(function() {
     function updateStatusMessage(message, color = "black") {
-        console.log(message); // Muestra el mensaje en la consola
+        console.log(message);
         $("#status-message").text(message).css("color", color);
     }
 
     $("#generate-report").click(async function() {
         $("#status-message").text("").css("color", "black");
-        updateStatusMessage("Generación del informe iniciada");
+
 
         let startDate = $("#start-date").val();
         let endDate = $("#end-date").val();
@@ -16,12 +16,25 @@ $(document).ready(function() {
         let selectedGroupNames = $("#selected-groups .group").map(function() {
             return $(this).text().trim().replace(' X', '');
         }).get();
+        let selectedProblems = $("#selected-problems .problem").map(function() {
+            return $(this).text().trim().replace(' X', '');
+        }).get();
 
-        if (startDate && endDate && selectedGroupIds.length) {
-            updateStatusMessage("Fechas y grupos seleccionados. Generando informe...", "black");
-            $("#generate-report").prop("disabled", true);
+        // Validar si todos los campos requeridos están completos
+        if (!startDate || !endDate || selectedGroupIds.length === 0 || selectedProblems.length === 0) {
+            alert("Es necesario llenar todos los campos: fechas, grupos y problemas.");
+        return;  // Detener la ejecución si falta algún campo
+        }
+
+        updateStatusMessage("Generación del informe iniciada");
+        $("#generate-report").prop("disabled", true);  // Deshabilitar el botón
+        $("#loading-icon").show();
+
+        if (startDate && endDate && selectedGroupIds.length && selectedProblems.length) {
+            //updateStatusMessage("Fechas y grupos seleccionados. Generando informe...", "black");
+            //$("#generate-report").prop("disabled", true);
             $("#status-message").removeClass().addClass("status-message status-message_GENERATING").text("Se está generando su informe").css("color", "black");
-            $("#loading-icon").show();
+            //$("#loading-icon").show();
             $("#progress-container").show();
             $("#progress-bar").attr("value", 0).attr("max", selectedGroupIds.length);
             $("#progress-percentage").text("0%");
@@ -53,7 +66,7 @@ $(document).ready(function() {
                 }
             }
 
-            async function fetchEventsForGroup(groupId, timeFrom, timeTill) {
+            async function fetchEventsForGroup(groupId, timeFrom, timeTill, problemName) {
                 const url = 'http://10.144.2.194/zabbix/api_jsonrpc.php';
                 const options = {
                     method: 'POST',
@@ -66,7 +79,7 @@ $(document).ready(function() {
                             groupids: [groupId],
                             time_from: timeFrom,
                             time_till: timeTill,
-                            search: { name: "Unavailable by ICMP ping" },
+                            search: { name: problemName },
                             severities: [4],
                             selectHosts: ["name"],
                             sortfield: "clock",
@@ -76,7 +89,7 @@ $(document).ready(function() {
                         id: 2
                     })
                 };
-                updateStatusMessage(`Fetching events for group ${groupId} from ${timeFrom} to ${timeTill}`, "black");
+                updateStatusMessage(`Fetching events for group ${groupId} from ${timeFrom} to ${timeTill} with problem ${problemName}`, "black");
                 return fetchWithRetry(url, options).catch(error => {
                     updateStatusMessage(`Error al consultar eventos para el grupo ${groupId}: ${error.message}`, "black");
                     return { error: true, groupId: groupId };
@@ -145,113 +158,133 @@ $(document).ready(function() {
                 return `${hours}h ${minutes}m`;
             }
 
+            function sanitizeSheetName(name) {
+                // Reemplazar caracteres no permitidos en nombres de hojas
+                return name.replace(/[\/\\\*\[\]:\?]/g, '|');
+            }
+            
+
             async function processGroup(groupId, groupName, index, totalGroups) {
                 try {
                     let allEvents = [];
                     let allHosts = [];
-
+            
                     let intervalDuration = maxIntervalHours * 3600;
                     let intervalsProcessed = 0;
                     let totalIntervals = Math.ceil((endTimestamp - startTimestamp) / intervalDuration);
-
+            
                     for (let currentStart = startTimestamp; currentStart < endTimestamp; currentStart += intervalDuration) {
                         let currentEnd = Math.min(currentStart + intervalDuration, endTimestamp);
                         updateStatusMessage(`Processing interval from ${currentStart} to ${currentEnd}`, "black");
-                        let eventData = await fetchEventsForGroup(groupId, currentStart, currentEnd);
-                        if (eventData.error) {
-                            throw new Error(`Error fetching events for group ${groupId}`);
+            
+                        // Aquí, recorremos todos los problemas seleccionados
+                        for (let problem of selectedProblems) {
+                            let eventData = await fetchEventsForGroup(groupId, currentStart, currentEnd, problem);
+                            if (eventData.error) {
+                                throw new Error(`Error fetching events for group ${groupId}`);
+                            }
+                            allEvents = allEvents.concat(eventData.result || []);
                         }
-                        allEvents = allEvents.concat(eventData.result || []);
+            
                         intervalsProcessed++;
                         let progressValue = index + (intervalsProcessed / totalIntervals);
                         let percentage = Math.round((progressValue / totalGroups) * 100);
                         $("#progress-bar").attr("value", progressValue);
                         $("#progress-percentage").text(`${percentage}%`);
                         updateStatusMessage(`Progreso: ${progressValue}/${totalGroups} (${percentage}%)`, "black");
-                        await new Promise(resolve => setTimeout(resolve, 50)); // Reducido a 50 ms para suavizar la actualización
+                        await new Promise(resolve => setTimeout(resolve, 50));
                     }
-
+            
                     let hostData = await fetchHostsForGroup(groupId);
                     if (hostData.error) {
                         throw new Error(`Error fetching hosts for group ${groupId}`);
                     }
                     allHosts = hostData.result || [];
-
-                    let reportData = await Promise.all(allEvents.map(async event => {
+            
+                    let reportData = [];
+                    for (let event of allEvents) {
                         let host = allHosts.find(h => h.hostid === event.hosts[0].hostid);
                         let startTime = event.clock;
                         let resolveTime = event.r_eventid ? await fetchResolveTime(event.r_eventid) : null;
                         let duration = calculateDuration(startTime, resolveTime);
-
-                        return {
-                            "Hora Inicio": convertToColombianTime(startTime),
-                            "Estado": mapSeverityToDescription(event.severity),
-                            "Host": host ? host.name : "Desconocido",
-                            "IP": host && host.interfaces.length > 0 ? host.interfaces[0].ip : "Desconocida",
-                            "Departamento": host && host.inventory ? host.inventory.site_state : "Desconocido",
-                            "Municipio": host && host.inventory ? host.inventory.site_city : "Desconocido",
-                            "Problema": "Unavailable by ICMP ping",
-                            "Hora Restauración": resolveTime ? convertToColombianTime(resolveTime) : "No Resuelto",
-                            "Duración": resolveTime ? calculateDuration(startTime, resolveTime) : "Sin Datos"
-                        };
-                    }));
-
-                    let sheetName = groupName.replace(/[:\/\\?*|\s]/g, "_");
-                    let truncatedName = sheetName.length > 25 ? sheetName.substring(0, 25) + "..." : sheetName;
-                    let ws = XLSX.utils.json_to_sheet(reportData);
-                    XLSX.utils.book_append_sheet(wb, ws, truncatedName);
-
+            
+                        // Verificamos si el nombre del evento incluye el problema actual
+                        for (let problem of selectedProblems) {
+                            if (event.name.includes(problem)) {
+                                reportData.push({
+                                    "Hora Inicio": convertToColombianTime(startTime),
+                                    "Estado": mapSeverityToDescription(event.severity),
+                                    "Host": host ? host.name : "Desconocido",
+                                    "IP": host && host.interfaces.length > 0 ? host.interfaces[0].ip : "Desconocida",
+                                    "Departamento": host && host.inventory ? host.inventory.site_state : "Desconocido",
+                                    "Municipio": host && host.inventory ? host.inventory.site_city : "Desconocido",
+                                    "Problema": problem, // Problema específico
+                                    "Hora Restauración": resolveTime ? convertToColombianTime(resolveTime) : "No resuelto",
+                                    "Duración": resolveTime ? duration : "En curso"
+                                });
+                            }
+                        }
+                    }
+            
+                    return reportData;
+            
                 } catch (error) {
-                    updateStatusMessage(`Error al procesar el grupo ${groupId}: ${error.message}`, "black");
+                    updateStatusMessage(`Error en el grupo ${groupId} (${groupName}): ${error.message}`, "black");
+                    return [];
                 }
             }
+            
 
-            async function processGroupsInBatches(groupIds, batchSize) {
-                for (let i = 0; i < groupIds.length; i += batchSize) {
-                    let batch = groupIds.slice(i, i + batchSize);
-                    updateStatusMessage(`Procesando lote: ${i} a ${i + batchSize}`, "black");
-                    let promises = batch.map(async (groupId, j) => {
-                        let groupName = selectedGroupNames[i + j];
-                        await processGroup(groupId, groupName, i + j, selectedGroupIds.length);
-                    });
-                    await Promise.all(promises);
-                    let progressValue = i + batchSize;
-                    let percentage = Math.round((progressValue / selectedGroupIds.length) * 100);
-                    $("#progress-bar").attr("value", progressValue);
-                    $("#progress-percentage").text(`${percentage}%`);
-                }
+            let allData = [];
+            let groupedData = {};
+
+            for (let i = 0; i < selectedGroupIds.length; i++) {
+                let groupId = selectedGroupIds[i];
+                let groupName = selectedGroupNames[i];
+                updateStatusMessage(`Procesando grupo ${groupId} (${groupName})`, "black");
+
+                let groupData = await processGroup(groupId, groupName, i, selectedGroupIds.length);
+                groupedData[groupName] = groupData;
+
+                let progressPercentage = Math.round(((i + 1) / selectedGroupIds.length) * 100);
+                $("#progress-bar").attr("value", i + 1);
+                $("#progress-percentage").text(`${progressPercentage}%`);
+                await new Promise(resolve => setTimeout(resolve, 100));
             }
 
-            const BATCH_SIZE = 1; // Limitar a 1 para reducir la carga
-            let wb = XLSX.utils.book_new();
-
-            try {
-                await processGroupsInBatches(selectedGroupIds, BATCH_SIZE);
-
-                let filename = `Informe_${startDate}_${endDate}_${selectedGroupNames.join('|')}.xlsx`;
-                XLSX.writeFile(wb, filename);
-                updateStatusMessage(`Informe generado con éxito: ${filename}`, "white");
-                $("#download-report").attr("href", `Generar_Informe/${filename}`).show();
-                $("#generate-report").prop("disabled", false);
+            if (Object.keys(groupedData).length === 0) {
+                updateStatusMessage("No se encontraron datos para el rango de fechas y grupos seleccionados.", "black");
                 $("#loading-icon").hide();
                 $("#progress-container").hide();
-                $("#generate-new-report").show();
-
-                // Mostrar mensaje emergente
-                alert(`Informe generado con éxito: ${filename}`);
-                
-                // Actualizar la página después de 7 segundos
-                //setTimeout(() => {
-                  //  location.reload();
-                //}, 7000);
-            } catch (error) {
-                updateStatusMessage(`Error al generar el informe: ${error.message}`, "black");
                 $("#generate-report").prop("disabled", false);
-                $("#loading-icon").hide();
-                $("#progress-container").hide();
+                return;
             }
+
+            updateStatusMessage("Generando archivo Excel...", "black");
+
+            let workbook = XLSX.utils.book_new();
+            for (let [groupName, data] of Object.entries(groupedData)) {
+                let sanitizedGroupName = sanitizeSheetName(groupName);
+                let worksheet = XLSX.utils.json_to_sheet(data);
+                XLSX.utils.book_append_sheet(workbook, worksheet, sanitizedGroupName);
+            }
+
+            let excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+
+            // Para descargar el archivo Excel
+            let blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "Informe_Eventos.xlsx";
+            link.click();
+
+            updateStatusMessage("Informe generado con éxito", "green");
+            $("#loading-icon").hide();
+            $("#progress-container").hide();
+            $("#generate-report").prop("disabled", false);
+
         } else {
-            alert("Por favor, complete todos los campos antes de generar el informe.");
+            updateStatusMessage("Por favor, selecciona un rango de fechas y al menos un grupo.", "red");
         }
     });
 });

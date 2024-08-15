@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -31,12 +32,12 @@
         }
         
         .form-container label {
-            margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+            margin-bottom: 1px; /* Espacio debajo de la etiqueta */
         }
         
         .form-container input {
             width: 100%; /* Ancho al 100% del contenedor */
-            max-width: 400px; /* Ajusta el ancho máximo */
+            max-width: 600px; /* Ajusta el ancho máximo */
             padding: 10px; /* Espaciado interno */
             border: 1px solid #ddd; /* Borde sutil */
             border-radius: 4px; /* Bordes redondeados */
@@ -47,7 +48,7 @@
         
         .date-container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 10px; /* Espacio entre los campos de fecha */
         }
 
@@ -149,7 +150,7 @@
             <h1>Generador de Informes</h1>
         </div>
         <div class="description">
-            <h3>Complete todos los campos para generar un informe de los equipos que han tenido el problema 'Unavailable by ICMP ping' en el rango de tiempo seleccionado</h3>
+            <h3>Complete todos los campos para generar un informe de los equipos que han tenido el problema 'Unavailable by ICMP ping' y "Puerta Abierta" en el rango de tiempo seleccionado</h3>
         </div>
         <div class="form-container">
             <form>
@@ -157,7 +158,13 @@
                 <input id="group-search" placeholder="" readonly>
                 <div id="selected-groups"></div>
                 <input type="hidden" id="selected-group-ids">
-                <div id="dropdown-menu"></div> <!-- El dropdown estará aquí -->
+                <div id="group-dropdown-menu"></div> <!-- El dropdown de grupos estará aquí -->
+
+                <label for="problem-search">Seleccione el tipo de problema:</label>
+                <input id="problem-search" placeholder="" readonly>
+                <div id="selected-problems"></div>
+                <input type="hidden" id="selected-problem-ids">
+                <div id="problem-dropdown-menu"></div> <!-- El dropdown de problemas estará aquí -->
 
                 <div class="date-container">
                     <div class="date-field">
@@ -182,7 +189,7 @@
             </div>
         </div>
         <footer>
-            <p>Azteca Comunicaciones &reg; 2024 <span class="firma">J L</span></p>
+            <p>Azteca Comunicaciones &reg; 2024 <span class="firma">V L</span></p>
         </footer>
     </div>
 

@@ -82,8 +82,20 @@ form {
 
 /* Estilo para el campo de búsqueda de grupos */
 #group-search {
-    width: calc(100% - 160px); /* Ajusta el ancho al 100% del contenedor menos un margen extra */
-    max-width: 100px; /* Aumenta el ancho máximo del campo */
+    max-width: 400px; /* Aumenta el ancho máximo del campo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    margin: 0 auto; /* Centra el campo horizontalmente dentro del formulario */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
+
+
+/* Estilo para el campo de búsqueda de grupos */
+#problem-search {
+    width: calc(100% - 100px); /* Ajusta el ancho al 100% del contenedor menos un margen extra */
+    max-width: 400px; /* Aumenta el ancho máximo del campo */
     padding: 10px; /* Espaciado interno */
     border: 1px solid #ddd; /* Borde sutil */
     border-radius: 4px; /* Bordes redondeados */
@@ -100,10 +112,17 @@ form {
     box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave al enfocar */
 }
 
+/* Cambiar el borde del campo de búsqueda al enfocar */
+#problem-search:focus {
+    border-color: #4a90e2; /* Color del borde al enfocar */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra suave al enfocar */
+}
+
 /* Estilo para el contenedor de los campos de fecha */
 .date-container {
     display: flex;
-    flex-direction: column; /* Campos apilados verticalmente */
+    flex-direction: row; /* Campos apilados verticalmente */
     align-items: center; /* Centra los elementos horizontalmente */
     gap: 10px; /* Espacio entre los campos */
     margin-top: 10px;
@@ -112,7 +131,7 @@ form {
 }
 
 /* Estilo para los campos de fecha */
-.date-field, #start-date, #end-date, #dropdown-menu, #group-search {
+.date-field, #start-date, #end-date, #dropdown-menu{
     width: 100%; /* Ancho al 100% */
     max-width: 300px; /* Ancho máximo */
     padding: 10px; /* Espaciado interno */
@@ -175,6 +194,19 @@ form {
 
 /* Cambiar el cursor al pasar sobre la X */
 .group span.remove-group:hover, .severity span.remove-severity:hover {
+    cursor: pointer;
+}
+
+/* Estilo para el icono de eliminación */
+.group span.remove-problem, .severity span.remove-severity {
+    color: red;
+    margin-left: 5px; /* Espaciado entre el nombre y el icono */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Cambiar el cursor al pasar sobre la X */
+.group span.remove-problem:hover, .severity span.remove-severity:hover {
     cursor: pointer;
 }
 
@@ -321,7 +353,25 @@ button:disabled {
     position: relative; /* Posición relativa para el icono de eliminación */
 }
 
+/* Estilo para los problemas seleccionados */
+.problem {
+    display: inline-block; /* Alinea los elementos en línea */
+    padding: 5px 10px; /* Espaciado interno */
+    margin: 5px; /* Margen alrededor del grupo */
+    border: 1px solid #ccc; /* Borde del grupo */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #e0e0e0; /* Color de fondo */
+    position: relative; /* Posición relativa para el icono de eliminación */
+}
+
 .remove-group {
+    cursor: pointer; /* Cursor tipo pointer para el icono de eliminación */
+    color: #ff0000; /* Color del icono de eliminación */
+    font-weight: bold; /* Negrita */
+    margin-left: 5px; /* Espaciado a la izquierda del icono */
+}
+
+.remove-problem {
     cursor: pointer; /* Cursor tipo pointer para el icono de eliminación */
     color: #ff0000; /* Color del icono de eliminación */
     font-weight: bold; /* Negrita */
@@ -366,4 +416,27 @@ footer .firma {
     width: 70px; /* Ancho del icono */
     height: 70px; /* Altura del icono */
     vertical-align: middle; /* Alineación vertical en el centro */
+}
+
+/* Estilo para el contenedor del menú desplegable */
+#group-dropdown-menu, #problem-dropdown-menu {
+    display: none; /* Oculta el menú inicialmente */
+    position: absolute; /* Posiciona el menú sobre otros elementos */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 10px; /* Bordes redondeados */
+    background-color: white; /* Fondo blanco */
+    max-height: 200px; /* Altura máxima */
+    max-width: 1000px; /* Altura máxima */
+    overflow-y: auto; /* Agrega scroll si es necesario */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Estilo para cada ítem del menú desplegable */
+#group-dropdown-menu div, #problem-dropdown-menu div {
+    padding: 10px; /* Espaciado interno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el ítem */
+}
+
+#group-dropdown-menu div:hover, #problem-dropdown-menu div:hover {
+    background-color: #f0f0f0; /* Fondo al pasar el cursor */
 }

@@ -39,12 +39,27 @@ $(document).ready(function() {
             $("#progress-bar").attr("value", 0).attr("max", selectedGroupIds.length);
             $("#progress-percentage").text("0%");
 
-            function convertToUnixTimestamp(dateString) {
-                return Math.floor(new Date(dateString).getTime() / 1000);
+            function convertToUnixTimestamp(dateString, isEndDate = false) {
+                // Crear una fecha ajustada a la zona horaria de Colombia (UTC-5)
+                let date = new Date(dateString + "T00:00:00-05:00");  // Ajuste manual de la hora
+            
+                if (isEndDate) {
+                    // Establecer la hora al final del día (23:59:59.999) en la zona horaria de Colombia
+                    date.setHours(23, 59, 59, 999);
+                } else {
+                    // Establecer la hora al inicio del día (00:00:00) en la zona horaria de Colombia
+                    date.setHours(0, 0, 0, 0);
+                }
+            
+                // Convertir la fecha a timestamp UNIX
+                return Math.floor(date.getTime() / 1000);
             }
+            
+            
 
-            let startTimestamp = convertToUnixTimestamp(startDate);
-            let endTimestamp = convertToUnixTimestamp(endDate);
+            let startTimestamp = convertToUnixTimestamp(startDate);  // Inicia a las 00:00:00
+            let endTimestamp = convertToUnixTimestamp(endDate, true);  // Termina a las 23:59:59
+            
             let maxIntervalHours = 1;
 
             async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
@@ -275,7 +290,7 @@ $(document).ready(function() {
             let blob = new Blob([excelBuffer], { type: "application/octet-stream" });
             let link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "Informe_Eventos.xlsx";
+            link.download = `${selectedGroupNames.join('|')}|${startDate}|${endDate}.xlsx`;
             link.click();
 
             updateStatusMessage("Informe generado con éxito", "green");

@@ -14,6 +14,7 @@ $(document).ready(function() {
                     class: "ui-datepicker-today ui-state-default ui-priority-primary ui-corner-all",
                     click: function() {
                         let today = new Date();
+                        today.setHours(0, 0, 0, 0);  // Ajustar la hora a 00:00:00 local
                         $(input).datepicker('setDate', today);
                         $(input).datepicker("hide");
                     }
@@ -38,6 +39,9 @@ $(document).ready(function() {
     $("#start-date").datepicker({
         dateFormat: "yy-mm-dd",
         onSelect: function(selectedDate) {
+            let startDate = new Date(selectedDate);
+            startDate.setHours(0, 0, 0, 0);  // Ajustar la hora a las 00:00:00 local
+            $("#start-date").datepicker('setDate', startDate);  // Actualizar con la hora ajustada
             $("#end-date").datepicker("option", "minDate", selectedDate);
             $("#end-date").prop("disabled", false);
         },
@@ -52,11 +56,12 @@ $(document).ready(function() {
         dateFormat: "yy-mm-dd",
         maxDate: 0,
         onSelect: function(selectedDate) {
+            let endDate = new Date(selectedDate);
+            endDate.setHours(23, 59, 59, 999);  // Ajustar la hora a las 23:59:59 local
+            $("#end-date").datepicker('setDate', endDate);  // Actualizar con la hora ajustada
             let startDate = $("#start-date").val();
-            if (startDate) {
-                if (selectedDate < startDate) {
-                    $("#start-date").datepicker("setDate", selectedDate);
-                }
+            if (startDate && selectedDate < startDate) {
+                $("#start-date").datepicker("setDate", endDate);
             }
         },
         beforeShow: function(input, inst) {

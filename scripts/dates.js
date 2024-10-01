@@ -37,35 +37,50 @@ $(document).ready(function() {
 
     // Inicializar el selector de fecha de inicio
     $("#start-date").datepicker({
-        dateFormat: "yy-mm-dd",
+        dateFormat: "yy-mm-dd",  // Asegurar consistencia en el formato
         onSelect: function(selectedDate) {
-            let startDate = new Date(selectedDate);
-            startDate.setHours(0, 0, 0, 0);  // Ajustar la hora a las 00:00:00 local
-            $("#start-date").datepicker('setDate', startDate);  // Actualizar con la hora ajustada
-            $("#end-date").datepicker("option", "minDate", selectedDate);
+            // No necesitas convertir el formato aquí
+            // Simplemente usa el valor seleccionado directamente
+            let startDate = $.datepicker.parseDate("yy-mm-dd", selectedDate);
+
+            // Actualizar el campo de fecha con la fecha seleccionada
+            $("#start-date").datepicker('setDate', startDate);  
+
+            // Establecer la fecha mínima en el campo de fecha de fin
+            $("#end-date").datepicker("option", "minDate", startDate);
+            
+            // Habilitar el campo de fecha de fin
             $("#end-date").prop("disabled", false);
         },
         beforeShow: function(input, inst) {
-            addCustomButtons(input);
+            addCustomButtons(input);  // Función personalizada para botones
         },
         showButtonPanel: true
     });
 
     // Inicializar el selector de fecha de fin
     $("#end-date").prop("disabled", true).datepicker({
-        dateFormat: "yy-mm-dd",
+        dateFormat: "yy-mm-dd",  // Mantener el mismo formato que el de la fecha de inicio
         maxDate: 0,
         onSelect: function(selectedDate) {
-            let endDate = new Date(selectedDate);
-            endDate.setHours(23, 59, 59, 999);  // Ajustar la hora a las 23:59:59 local
-            $("#end-date").datepicker('setDate', endDate);  // Actualizar con la hora ajustada
-            let startDate = $("#start-date").val();
-            if (startDate && selectedDate < startDate) {
+            // Usar el mismo formato de la fecha para convertirla
+            let endDate = $.datepicker.parseDate("yy-mm-dd", selectedDate);
+            
+            // Ajustar la hora al final del día si es necesario (esto no afectará la selección de la fecha)
+            endDate.setHours(23, 59, 59, 999);  
+            
+            // Actualizar el campo de fecha con la fecha seleccionada
+            $("#end-date").datepicker('setDate', endDate);
+            
+            // Verificar si la fecha de fin es anterior a la fecha de inicio
+            let startDate = $("#start-date").datepicker('getDate');
+            if (startDate && endDate < startDate) {
+                // Si la fecha final es anterior a la de inicio, ajustar la fecha de inicio
                 $("#start-date").datepicker("setDate", endDate);
             }
         },
         beforeShow: function(input, inst) {
-            addCustomButtons(input);
+            addCustomButtons(input);  // Función personalizada para botones
         },
         showButtonPanel: true
     });

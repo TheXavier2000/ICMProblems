@@ -1,4 +1,5 @@
 [
     { "id": "1", "name": "Unavailable by ICMP ping" },
-    { "id": "2", "name": "Puerta Abierta" }
+    { "id": "2", "name": "Puerta Abierta" },
+    { "id": "3", "name": "Descarga Batería" }
 ]

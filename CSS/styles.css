@@ -405,8 +405,8 @@ footer p {
 footer .firma {
     display: block; /* Muestra el elemento como bloque */
     margin-top: 0; /* Sin margen superior */
-    font-family: 'Great Vibes', cursive; /* Fuente cursiva */
-    font-size: 14px; /* Tamaño de fuente */
+    font-family: 'Freestyle Script', cursive; /* Fuente cursiva */
+    font-size: 25px; /* Tamaño de fuente */
     color: #fff; /* Texto blanco */
     margin-left: 10px; /* Espaciado a la izquierda */
 }

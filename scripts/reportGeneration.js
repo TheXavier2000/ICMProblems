@@ -83,6 +83,15 @@ $(document).ready(function() {
 
             async function fetchEventsForGroup(groupId, timeFrom, timeTill, problemName) {
                 const url = 'http://10.144.2.194/zabbix/api_jsonrpc.php';
+
+            // Lógica para definir la severidad según grupo y problema
+            let severities = [4];  // Severidad predeterminada
+
+            // Si el grupo es 53 y el problema es "Descarga Batería", cambiamos la severidad a 2
+            if (groupId === 53 && problemName === "Descarga Batería") {
+                severities = [2];
+            }                
+
                 const options = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -95,7 +104,7 @@ $(document).ready(function() {
                             time_from: timeFrom,
                             time_till: timeTill,
                             search: { name: problemName },
-                            severities: [4],
+                            severities: severities,
                             selectHosts: ["name"],
                             sortfield: "clock",
                             sortorder: "DESC"
@@ -105,6 +114,7 @@ $(document).ready(function() {
                     })
                 };
                 updateStatusMessage(`Fetching events for group ${groupId} from ${timeFrom} to ${timeTill} with problem ${problemName}`, "black");
+
                 return fetchWithRetry(url, options).catch(error => {
                     updateStatusMessage(`Error al consultar eventos para el grupo ${groupId}: ${error.message}`, "black");
                     return { error: true, groupId: groupId };
@@ -158,7 +168,7 @@ $(document).ready(function() {
             }
 
             function mapSeverityToDescription(severityId) {
-                const severityMap = { 4: "High" };
+                const severityMap = { 4: "High", 2: "Warning"};
                 return severityMap[severityId] || "Unknown";
             }
 
@@ -183,16 +193,21 @@ $(document).ready(function() {
                 try {
                     let allEvents = [];
                     let allHosts = [];
-            
+                
                     let intervalDuration = maxIntervalHours * 3600;
-                    let intervalsProcessed = 0;
                     let totalIntervals = Math.ceil((endTimestamp - startTimestamp) / intervalDuration);
-            
+                
+                    let totalProgressSteps = totalIntervals * selectedProblems.length; // Para cada intervalo y problema
+                    let currentProgressStep = 0; // Inicializamos el progreso actual
+                
+                    // Progreso total en la primera fase (hasta el 50%)
+                    let maxFirstPhaseProgress = 0.5;
+                
+                    // Primera fase: procesamiento de intervalos
                     for (let currentStart = startTimestamp; currentStart < endTimestamp; currentStart += intervalDuration) {
                         let currentEnd = Math.min(currentStart + intervalDuration, endTimestamp);
                         updateStatusMessage(`Processing interval from ${currentStart} to ${currentEnd}`, "black");
-            
-                        // Aquí, recorremos todos los problemas seleccionados
+                
                         for (let problem of selectedProblems) {
                             let eventData = await fetchEventsForGroup(groupId, currentStart, currentEnd, problem);
                             if (eventData.error) {
@@ -200,30 +215,42 @@ $(document).ready(function() {
                             }
                             allEvents = allEvents.concat(eventData.result || []);
                         }
-            
-                        intervalsProcessed++;
-                        let progressValue = index + (intervalsProcessed / totalIntervals);
-                        let percentage = Math.round((progressValue / totalGroups) * 100);
-                        $("#progress-bar").attr("value", progressValue);
+                
+                        // Actualizar progreso después de cada intervalo en la primera fase
+                        currentProgressStep++;
+                        let progressValue = (currentProgressStep / totalProgressSteps) * maxFirstPhaseProgress;
+                        let percentage = Math.round(progressValue * 100);
+                        $("#progress-bar").attr("value", percentage);
                         $("#progress-percentage").text(`${percentage}%`);
-                        updateStatusMessage(`Progreso: ${progressValue}/${totalGroups} (${percentage}%)`, "black");
+                        updateStatusMessage(`Progreso: ${percentage}%`, "black");
+                
                         await new Promise(resolve => setTimeout(resolve, 50));
                     }
-            
+                
                     let hostData = await fetchHostsForGroup(groupId);
                     if (hostData.error) {
                         throw new Error(`Error fetching hosts for group ${groupId}`);
                     }
                     allHosts = hostData.result || [];
-            
+                
                     let reportData = [];
-                    for (let event of allEvents) {
+                
+                    // Segunda fase: procesamiento de eventos
+                    let totalEventSteps = allEvents.length;
+                    for (let i = 0; i < allEvents.length; i++) {
+                        let event = allEvents[i];
                         let host = allHosts.find(h => h.hostid === event.hosts[0].hostid);
                         let startTime = event.clock;
                         let resolveTime = event.r_eventid ? await fetchResolveTime(event.r_eventid) : null;
                         let duration = calculateDuration(startTime, resolveTime);
-            
-                        // Verificamos si el nombre del evento incluye el problema actual
+                
+                        // Actualización del progreso en la segunda fase
+                        let secondPhaseProgress = (i + 1) / totalEventSteps * (1 - maxFirstPhaseProgress) + maxFirstPhaseProgress;
+                        let percentage = Math.round(secondPhaseProgress * 100);
+                        $("#progress-bar").attr("value", percentage);
+                        $("#progress-percentage").text(`${percentage}%`);
+                        updateStatusMessage(`Progreso: ${percentage}%`, "black");
+                
                         for (let problem of selectedProblems) {
                             if (event.name.includes(problem)) {
                                 reportData.push({
@@ -233,21 +260,24 @@ $(document).ready(function() {
                                     "IP": host && host.interfaces.length > 0 ? host.interfaces[0].ip : "Desconocida",
                                     "Departamento": host && host.inventory ? host.inventory.site_state : "Desconocido",
                                     "Municipio": host && host.inventory ? host.inventory.site_city : "Desconocido",
-                                    "Problema": problem, // Problema específico
+                                    "Problema": problem,
                                     "Hora Restauración": resolveTime ? convertToColombianTime(resolveTime) : "No resuelto",
                                     "Duración": resolveTime ? duration : "En curso"
                                 });
                             }
                         }
                     }
-            
+                
                     return reportData;
-            
+                
                 } catch (error) {
                     updateStatusMessage(`Error en el grupo ${groupId} (${groupName}): ${error.message}`, "black");
                     return [];
                 }
             }
+            
+            
+            
             
 
             let allData = [];

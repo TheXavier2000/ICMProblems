@@ -99,7 +99,7 @@ $(document).ready(function() {
                         jsonrpc: "2.0",
                         method: "event.get",
                         params: {
-                            output: ["eventid", "name", "clock", "severity", "hosts", "r_eventid"],
+                            output: ["eventid", "name", "clock", "severity", "r_eventid"], // Corregido
                             groupids: [groupId],
                             time_from: timeFrom,
                             time_till: timeTill,
